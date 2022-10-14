@@ -39,7 +39,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       validate: {
         isPhoneNumber(value) {
-          if (/\d{3}-\d{3}-\d{4}/.test(value)) {
+          if (/^[+]\d{1,3}[-]\d{1,3}[-]\d{7,7}/.test(value)) {
             throw new Error("Invalid format");
           }
         },
