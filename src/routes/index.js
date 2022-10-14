@@ -43,14 +43,50 @@ router.get('/home', async(req, res) => {
   }
   
   else {
-      return res.status(200).send(buscararticulo)
+      return res.status(200).send(articulo)
 
 
   }
 
    })   
+   router.post('/home', async function (req, res) {
+    try {
+     const { product_name, admin_id, category, price,description, stock, images, rating, comments, options} = req.body;
+     let newProduct = await Product.create({
+            product_name,
+            admin_id,
+            price,description,
+            stock,
+            images,
+            rating,
+            comments,
+            options
+                                       
+         })
+
+                        
+
+  let tempbase = await Categories.findAll({
+         where: {
+            category_name : category
+         }
+     }) 
+                
+                 
+       newProduct.addCategories(tempbase) 
+         res.send("Producto agregado con exito")
+ } catch(error){
+     res.status(401).send(error + " No se cargo Producto")
+
+ } 
+ 
+      
+     
+ })
 
 router;
+
+
 
 
 
