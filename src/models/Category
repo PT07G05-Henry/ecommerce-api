@@ -21,23 +21,10 @@ module.exports = (sequelize) => {
           );
         },
       },
-      type: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        set(value) {
-          this.setDataValue(
-            "type",
-            value[0].toUpperCase() + value.toLowerCase().substring(1)
-          );
-        },
-      },
       image: {
         type: DataTypes.TEXT,
         allowNull: false,
       },
     },
-    {
-      timestamps: false,
-    }
   );
 };
