@@ -26,6 +26,9 @@ module.exports = (sequelize) => {
       stock: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+          min: 0,
+        },
       },
       images: {
         type: DataTypes.ARRAY(DataTypes.TEXT),
@@ -33,17 +36,17 @@ module.exports = (sequelize) => {
       },
       rating: {
         type: DataTypes.INTEGER,
-        validations: {
+        validate: {
           max: 5,
           min: 0,
         },
       },
-      comments: {
-        type: DataTypes.ARRAY(DataTypes.TEXT),
-      },
-      options: {
-        type: DataTypes.STRING,
-      },
+      // comments: {
+      //   type: DataTypes.ARRAY(DataTypes.TEXT),
+      // },
+      // options: {
+      //   type: DataTypes.STRING,
+      // },
     },
     {
       timestamps: false,
