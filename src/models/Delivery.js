@@ -10,26 +10,20 @@ module.exports = (sequelize) => {
       primaryKey: true,
     },
     type: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM,
+      values: [
+        "Home Delivery",
+        "Shipping to a delivery point",
+        "Express Shipping.",
+        "Standard Shipping",
+        "International Shipping",
+      ],
       allowNull: false,
-      validate: {
-        isIn: [
-          [
-            "Home Delivery",
-            "Shipping to a delivery ponint",
-            "Express shipping.",
-            "Standard Shipping",
-            "International Shipping",
-          ],
-        ],
-      },
     },
     status: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM,
+      values: ["On the way", "Pre-admission", "Delivered"],
       allowNull: false,
-      validate: {
-        isIn: [["On the way", "Pre-admission", "Delivered"]],
-      },
     },
     shipping_address: {
       type: DataTypes.TEXT,
