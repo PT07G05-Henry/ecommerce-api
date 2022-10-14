@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
         validate: {
           len: {
             args: [0, 50],
-            msg: "The first name has too many characters",
+            msg: "The First Name has too many characters",
           },
         },
         set(value) {
@@ -37,7 +37,7 @@ module.exports = (sequelize) => {
         validate: {
           len: {
             args: [0, 50],
-            msg: "The first name has too many characters",
+            msg: "The Last Name has too many characters",
           },
         },
         set(value) {
@@ -47,7 +47,7 @@ module.exports = (sequelize) => {
               .toLowerCase()
               .split(" ")
               .map((w) => w[0].toUpperCase() + w.slice(1))
-              .join(" ") // Poner las iniciales de los nobres o apellidos con mayusculas
+              .join(" ") 
           );
         },
       },
