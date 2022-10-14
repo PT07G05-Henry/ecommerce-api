@@ -3,28 +3,29 @@ const { DataTypes } = require("sequelize");
 // Luego le inyectamos la conexión a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define(
-    "category",
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        set(value) {
-          this.setDataValue(
-            "name",
-            value[0].toUpperCase() + value.toLowerCase().substring(1)
-          );
-        },
-      },
-      image: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+  sequelize.define("category", {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      set(value) {
+        this.setDataValue("name", value.toUpperCase());
       },
     },
-  );
+    image: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        isImage(value) {
+          if (/\.(jpg|jpeg|png|webp|avif|gif)$/.test(value)) {
+            throw new Error("Invalid format");
+          }
+        },
+      },
+    },
+  });
 };
