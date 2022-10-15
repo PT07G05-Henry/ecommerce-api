@@ -10,8 +10,9 @@ module.exports = (sequelize) => {
       primaryKey: true,
     },
     type:{
-        type: DataTypes.ENUM(["User", "Admin"]),
+        type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
     }
   },{
     timestamps: false,
