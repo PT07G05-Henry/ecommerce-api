@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       values: [
         "Home Delivery",
         "Shipping to a delivery point",
-        "Express Shipping.",
+        "Express Shipping",
         "Standard Shipping",
         "International Shipping",
       ],
