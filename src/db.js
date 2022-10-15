@@ -60,7 +60,7 @@ Rol.belongsToMany(User, {through: 'users_rols', timestamps: false});
 
 Users_rols.hasMany(Product);
 Product.belongsTo(Users_rols);
-console.log(sequelize.models)
+
 
 module.exports = {
     ...sequelize.models, // para poder importar los modelos así: const { User, Otro, OtroMas } = require('./db.js');
