@@ -43,6 +43,7 @@ router.get('/product', async(req, res) => {
   else {
     
       return res.status(200).send(articulo)
+      
 
 
   }
