@@ -31,8 +31,14 @@ module.exports = (sequelize) => {
         },
       },
       images: {
-        type: DataTypes.ARRAY(DataTypes.TEXT),
+        type: DataTypes.TEXT,
         allowNull: false,
+        get: function() {
+          return JSON.parse(this.getDataValue('images'));
+        }, 
+        set: function(val) {
+            return this.setDataValue('images', JSON.stringify(val));
+        }
       },
       rating: {
         type: DataTypes.INTEGER,
