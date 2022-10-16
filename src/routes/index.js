@@ -1,112 +1,39 @@
-const { Router } = require("express");
-const { User, Product, Category, Comment, Rol, Op } = require("../db");
+const express = require("express");
+const { Product, Category, User } = require('../db');
+const categoryRoute = require("./categories");
+const commentRoute = require("./comments");
+const deliveryRoute = require("./deliveries");
+const orderRoute = require("./orders");
+const paymentRoute = require("./payments");
+const productRoute = require("./products");
+const userRoute = require("./users");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-const router = Router();
+const router = express();
+router.use(express.json());
+
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-const getUsers = async () => {
-  return User.findAll({
-    include: Rol,
-  });
-};
+router.use("/categories", categoryRoute);
 
-const getProductsByFilter = async function (name) {
-  let products = await Product.findAll({
-    where: {
-      name: {
-        [Op.iLike]: `%${name}%`,
-      },
-    },
-    include: [Comment, Category],
-  });
-  return products;
-};
+router.use("/comments", commentRoute);
 
-const getAllProducts = async function () {
-  let products = await Product.findAll({
-    include: [Comment, Category],
-  });
-  return products;
-};
+router.use("/deliveries", deliveryRoute);
 
-router.get("/product", async (req, res) => {
-  let name = req.query.name;
-  let products;
-  try {
-    if (productName) {
-      products = await getProductsByFilter(name);
-      if (products.length === 0)
-        return res.send("There are no matches in the DB").status(404);
-      res.status(200).send(products);
-    } else {
-      products = await getAllProducts();
-      if (products.length === 0)
-        return res.send("There are no products loaded in the DB");
-      res.status(200).send(products);
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err.message);
-  }
-});
+router.use("/orders", orderRoute);
 
-router.post("/product", async function (req, res) {
-  const { name, price, description, stock, images } = req.body;
-  if (!name || !price || !description || !stock || !images) {
-    res.status(400);
-    return res.send("Missing to send mandatory data");
-  }
-  try {
-    let newProduct = await Product.create(req.body);
-    await newProduct.setCategories(req.body.categories);
-    res.sendStatus(201);
-  } catch (err) {
-    res.status(400);
-    res.send(err.message);
-  }
-});
+router.use("/payments", paymentRoute);
 
-router.get("/user", async (req, res) => {
-  const email = req.query.email;
-  let users = await getUsers();
-  if (email) {
-    let findUser = await users.filter((u) =>
-      u.email.toLowerCase().includes(email.toLowerCase())
-    );
-    findUser.length
-      ? res.status(200).send(findUser)
-      : res.status(404).send("There are no matches in the DB");
-  } else {
-    if (users.length === 0)
-      return res.send("There are no Users loaded in the DB");
-    res.status(200).send(users);
-  }
-});
-   
-router.post("/user", async function (req, res) {
-  const { first_name, last_name, birth_date, email, password } = req.body;
-  if (!first_name || !last_name || !birth_date || !email || !password) {
-    res.status(400);
-    return res.send("Missing to send mandatory data");
-  }
-  try {
-    let newUser = await User.create(req.body);
-    await newUser.setRols(req.body.rols);
-    res.sendStatus(201);
-  } catch (error) {
-    res.status(400);
-    res.send(error.message);
-  }
-});
+router.use("/products", productRoute);
 
-router.get("/test", async (req, res) => {
-  res.status(200).send({ hi: "Hello world!!!" });
-});
+router.use("/users", userRoute);
+
 router.all("*", (req, res) => {
   res.redirect("/");
 });
 router;
+
+
 module.exports = router;

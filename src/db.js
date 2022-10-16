@@ -61,11 +61,14 @@ Rol.belongsToMany(User, {through: 'users_rols', timestamps: false});
 Users_rols.hasMany(Product);
 Product.belongsTo(Users_rols);
 
-User.hasMany(Comment);
-Comment.belongsTo(User);
-
 Product.hasMany(Comment);
 Comment.belongsTo(Product);
+
+User.hasMany(Product);
+Product.belongsTo(User);
+
+User.hasMany(Comment);
+Comment.belongsTo(User);
 
 
 module.exports = {

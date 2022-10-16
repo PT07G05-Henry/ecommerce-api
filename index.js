@@ -1,11 +1,13 @@
 const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
 const loadDb = require("./src/loadDb.js");
+require("dotenv").config();
+const { PORT } = process.env;
 
 const startServer = () => {
-  server.listen(80, async () => {
+  server.listen(PORT, async () => {
     await loadDb(); // cargando la base de datos con datos mockeados de la mockapi
-    console.log("Listening at 80");
+    console.log("Listening at PORT " + PORT);
   });
 };
 
