@@ -70,10 +70,21 @@ router.get("/:id", async (req, res) => {
       : res.status(404).send({ error: "Product Not Found" });
 });
 
-router.post("/", async (req, res) => {
-    //falta escribir acá
-});
-
+router.post("/", async function (req, res) {
+    const { name, price, description, stock, images } = req.body;
+    if (!name || !price || !description || !stock || !images) {
+      res.status(400);
+      return res.send("Missing to send mandatory data");
+    }
+    try {
+      let newProduct = await Product.create(req.body);
+      await newProduct.setCategories(req.body.categories);
+      res.sendStatus(201);
+    } catch (err) {
+      res.status(400);
+      res.send(err.message);
+    }
+  });
 router.put("/", async (req, res) => {
     //falta escribir acá
 });
