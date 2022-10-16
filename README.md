@@ -12,16 +12,10 @@ CORS=ENABLE #Habilita o deshabilita el acceso desde cualquier lado (déjenlo ENA
 DB_USER=USER #Reemplacen USER por el Usuario de Postgres
 DB_PASSWORD=PASSWORD #Reemplacen PASSWORD por la Contraseña de Postgres
 DB_HOST=DOMAIN #Reemplacen DOMAIN por "localhost" si lo corren de manera local o el IP o Dominio de donde se encuentre si es un servidor externo.
+PORT=PUERTO #Puerto en el que Express se va a poner a escuchar, para deploy es 80
 ```
 
 **Atención:** Se espera que el servidor corra bajo el puerto por defecto de Postgres, si esta en uno distinto no va a poder conectarse.
-
-**Agregado_fede:** Se agrega la variable PORT para poder levantar el back con el puerto que tengan configurado para el postgress o la db deployada, de esta manera solo tienen que agregar en el .env la siguiente variable:
-
-PORT=puerto
-
-<!-- Reemplacen puerto por el que usan, en mi caso quedo el 3001. En el caso de chris el lo configuro en 80 que es el por defecto -->
-
 ## La carpeta "src" contiene:
 
 - app.js: define como se comporta Express.js, no debería de tocarse a menos que quieran implementar alguna otra funcionalidad a express como por ejemplo usar HTTPS, o algún otro Middleware
