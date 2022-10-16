@@ -97,7 +97,6 @@ module.exports = async () => {
     
     users.forEach((u) => {
       User.upsert({
-        id: u.id,
         first_name: u.first_name,
         last_name: u.last_name,
         birth_date: u.birth_date,
@@ -107,13 +106,13 @@ module.exports = async () => {
       });
     });
 
-   categories.forEach((c) => {
-      Category.upsert({
-        id: c.id,
-        name: c.name,
-        image: c.image
-      });
+  categories.forEach((c) => {
+    Category.upsert({
+      id: c.id,
+      name: c.name,
+      image: c.image
     });
+  });
 
     comments.forEach((c) => {
       Comment.upsert({

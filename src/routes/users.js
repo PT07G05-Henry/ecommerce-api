@@ -6,7 +6,6 @@ const { User, Order, Product, Rol, Comment } = require('../db');
 const router = Router();
 
 // Configura las funciones
-let idUser = 1001;
 
 const getDetailUser = async (id) => {
     return await User.findByPk( id )
@@ -47,21 +46,20 @@ router.get("/:id", async(req, res)=>{
 })
 
 router.post("/", async function (req, res) {
-    const { first_name, last_name, birth_date, email, password } = req.body;
-    if (!first_name || !last_name || !birth_date || !email || !password) {
+    const { given_name, family_name, birth_date, email, sub, picture } = req.body;
+    if (!given_name || !family_name || !birth_date || !email || !sub) {
       res.status(400);
       return res.send("Missing to send mandatory data");
     }
     try {
       let newUser = await User.create({
-        id: idUser,
-        first_name,
-        last_name,
+        first_name: given_name,
+        last_name: family_name,
         birth_date,
         email,
-        password
+        password: sub,
+        profile_picture: picture
       });
-      idUser++;
       await newUser.setRols(req.body.rols);
       res.sendStatus(201);
     } catch (error) {
@@ -71,7 +69,27 @@ router.post("/", async function (req, res) {
   });
 
 router.put("/", async (req, res) => {
-    //falta escribir acá
+  const { id, given_name, family_name, birth_date, email, sub } = req.body;
+  try {
+    await User.update({ 
+      first_name: given_name,
+      last_name: family_name,
+      birth_date,
+      email,
+      password: sub,
+    }, 
+    {
+      where: {
+        id: id
+      }
+    });
+  let userUpdate = await getDetailUser(id)
+  res.status(200);
+  res.send(userUpdate);
+  } catch(err) {
+    res.status(400);
+    res.send(err.message);
+  }
 });
 
 router.delete("/", async (req, res) => {
