@@ -1,0 +1,10 @@
+[{"id":1,"name":"placas de video","image":"http://dummyimage.com/198x100.png/ff4444/ffffff"},
+{"id":2,"name":"computadora","image":"http://dummyimage.com/229x100.png/5fa2dd/ffffff"},
+{"id":3,"name":"memoria ram","image":"http://dummyimage.com/220x100.png/5fa2dd/ffffff"},
+{"id":4,"name":"fuentes de poder","image":"http://dummyimage.com/127x100.png/ff4444/ffffff"},
+{"id":5,"name":"computadora","image":"http://dummyimage.com/248x100.png/5fa2dd/ffffff"},
+{"id":6,"name":"computadora","image":"http://dummyimage.com/205x100.png/cc0000/ffffff"},
+{"id":7,"name":"varios","image":"http://dummyimage.com/126x100.png/cc0000/ffffff"},
+{"id":8,"name":"memoria ram","image":"http://dummyimage.com/167x100.png/5fa2dd/ffffff"},
+{"id":9,"name":"computadora","image":"http://dummyimage.com/146x100.png/dddddd/000000"},
+{"id":10,"name":"almacenamiento","image":"http://dummyimage.com/195x100.png/cc0000/ffffff"}]

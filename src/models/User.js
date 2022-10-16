@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+const createHash = require("../../createHash")
 // Exportamos una función que define el modelo
 // Luego le inyectamos la conexión a sequelize.
 module.exports = (sequelize) => {
@@ -71,6 +72,9 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+        set(value){
+          this.setDataValue("password", createHash(value))
+        }
       },
       profile_picture: {
         type: DataTypes.TEXT,
