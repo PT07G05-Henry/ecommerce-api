@@ -1,65 +1,34 @@
-const { Router } = require("express");
-const { Product, Category, User } = require('../db')
+const express = require("express");
+const { Product, Category, User } = require('../db');
+const categoryRoute = require("./categories");
+const commentRoute = require("./comments");
+const deliveryRoute = require("./deliveries");
+const orderRoute = require("./orders");
+const paymentRoute = require("./payments");
+const productRoute = require("./products");
+const userRoute = require("./users");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-const router = Router();
+const router = express();
+router.use(express.json());
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-let idUser = 1001;
+router.use("/categories", categoryRoute);
 
-const getDetailProduct = async (id) => {
-  return await Product.findByPk( id ,{
-    include: {
-      model: Category,
-      attributes: ["name"],
-      through: {
-        attributes: [],
-      }, 
-    }
-  })
-}
+router.use("/comments", commentRoute);
 
-router.get("/test", async (req, res) => {
-  res.status(200).send({ hi: "Hello world!!!" })
-});
+router.use("/deliveries", deliveryRoute);
 
-router.get("/product/", async (req, res) => {
-  const products = await Product.findAll();
-  products
-    ? res.status(200).send(products)
-    : res.status(404).send({ error: "Product Not Found" });
-});
+router.use("/orders", orderRoute);
 
-router.get("/product/:id", async (req, res) => {
-  let id = req.params.id;
-  let product = await getDetailProduct(id);
-  product
-    ? res.status(200).send(product)
-    : res.status(404).send({ error: "Product Not Found" });
-});
+router.use("/payments", paymentRoute);
 
-router.post("/user", async (req, res)=>{
-  const {first_name, last_name, birth_date, email, password, profile_picture} = req.body;
-  try {
-    const usuario = await User.create({
-      id: idUser,
-      first_name,
-      last_name,
-      birth_date,
-      email,
-      password,
-      profile_picture,
-    });
-    idUser++;
-    res.status(200).json(usuario)
-  }catch(err){
-    res.status(404).send({err: err, errorM: err.message})
-  }
+router.use("/products", productRoute);
 
-})
+router.use("/users", userRoute);
 
 router.all("*", (req, res) => {
   res.redirect("/");
