@@ -1,5 +1,7 @@
 const { Router } = require("express");
 const { Product, Category, Order, Comment } = require("../db");
+require("dotenv").config();
+const {PORT} = process.env
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -41,26 +43,26 @@ const getAllProducts = async function () {
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.get("/", async (req, res) => {
-  let name = req.query.name;
-  let products;
-  try {
-    if (name) {
-      products = await getProductsByFilter(name);
-      if (products.length === 0)
-        return res.send("There are no matches in the DB").status(404);
-      res.status(200).send(products);
-    } else {
-      products = await getAllProducts();
-      if (products.length === 0)
-        return res.send("There are no products loaded in the DB");
-      res.status(200).send(products);
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err.message);
-  }
-});
+// router.get("/", async (req, res) => {
+//   let name = req.query.name;
+//   let products;
+//   try {
+//     if (name) {
+//       products = await getProductsByFilter(name);
+//       if (products.length === 0)
+//         return res.send("There are no matches in the DB").status(404);
+//       res.status(200).send(products);
+//     } else {
+//       products = await getAllProducts();
+//       if (products.length === 0)
+//         return res.send("There are no products loaded in the DB");
+//       res.status(200).send(products);
+//     }
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).send(err.message);
+//   }
+// });
 
 router.get("/:id", async (req, res) => {
   let id = req.params.id;
@@ -82,10 +84,13 @@ router.get("/:id", async (req, res) => {
 Se tienen que poder mezclar los query en el mismo endpoint
 */
 
-const getAllProducts2 = async function (page, quantity) {
+const getAllProducts2 = async function (page, quantity, order="id", typeOrder="ASC") {
   let productsPerPage = await Product.findAndCountAll({
     limit: quantity,
     offset: (page - 1) * quantity,
+    order: [
+      [order, typeOrder]
+    ]
   });
   return productsPerPage;
 };
@@ -111,7 +116,16 @@ router.get("/", async (req, res) => {
       products = await getAllProducts2(page, quantity);
       if (products.length === 0)
         return res.send("There are no products loaded in the DB");
-      // res.status(200).send(products);
+      const obj = {
+        totalProducts: products.count,
+        next: (Number(page)+1)>(products.count/quantity)?"":`http://localhost:${PORT}/products?page=${Number(page)+1}&quantity=${quantity}`,
+        prev: (Number(page)-1)===0?"":`http://localhost:${PORT}/products?page=${Number(page)-1}&quantity=${quantity}`,
+        totalPage: products.count/quantity,
+        page: page,
+        quantity: quantity,
+        results: products.rows, 
+      }
+      res.status(200).send(obj);
     }
   } catch (err) {
     console.log(err);

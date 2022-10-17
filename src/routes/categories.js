@@ -17,7 +17,7 @@ const getAllCategory = async ()=>{
 
 router.get("/", async (req, res) => {
     try{
-        res.status(200).send(getAllCategory())
+        res.status(200).send(await getAllCategory())
     }catch(err){
         res.status(404).send({err})
     }
