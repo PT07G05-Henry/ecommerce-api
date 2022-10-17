@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Category } = require('../db')
+const { Category } = require("../db");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -7,37 +7,79 @@ const router = Router();
 
 // Configura las funciones
 
-const getAllCategory = async ()=>{
-    const categories = await Category.findAll();
-    return categories;
+const getAllCategory = async () => {
+  const categories = await Category.findAll();
+  return categories;
 };
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
 router.get("/", async (req, res) => {
-    try{
-        res.status(200).send(await getAllCategory())
-    }catch(err){
-        res.status(404).send({err})
-    }
+  try {
+    let categories = await getAllCategory();
+    if (categories.length === 0)
+      return res.send("There are no categories loaded in the DB").status(404);
+    res.status(200).send(categories);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 });
 
 router.post("/", async (req, res) => {
-    //falta escribir acá
+  const { name, image } = req.body;
+  if (!name || !image) {
+    res.status(400);
+    return res.send("Missing to send mandatory data");
+  }
+  try {
+    await Category.create(req.body);
+    res.sendStatus(201);
+  } catch (err) {
+    res.status(400);
+    res.send(err.message);
+  }
 });
 
 router.put("/", async (req, res) => {
-    //falta escribir acá
+  const { name, image, id } = req.body;
+  try {
+    await Category.update(
+      {
+        name: name,
+        image: image,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.status(200).send("Category uploaded successfully");
+  } catch (err) {
+    res.status(400);
+    res.send(err.message);
+  }
 });
 
 router.delete("/", async (req, res) => {
-    //falta escribir acá
+  const { id } = req.body;
+  try {
+    await Category.destroy({
+      where: {
+        id: id,
+      },
+    });
+    res.status(200);
+    res.send("Category removed succesfully");
+  } catch (err) {
+    res.status(400);
+    res.send(err.message);
+  }
 });
 
 router.all("*", async (req, res) => {
   res.redirect("/");
 });
-
 
 module.exports = router;
