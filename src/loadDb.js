@@ -128,8 +128,8 @@ module.exports = async () => {
 
 
     pr.forEach(async(p)=>{
-      await p.addCategory(await Category.findByPk(getRandom(1,10)));
-      await p.addOrder(await Order.findByPk(getRandom(1,600) ));
+      await p.addCategory(await Category.findByPk(getRandom(1,Category.length)));
+      await p.addOrder(await Order.findByPk(getRandom(1,Order.length) ));
     })
     
     
@@ -143,8 +143,8 @@ module.exports = async () => {
     //Comentarios
     const com = await Comment.findAll();
     com.forEach(async(c)=>{
-      await c.setUser(await User.findByPk(getRandom(1,1000)));
-      await c.setProduct(await Product.findByPk(getRandom(1,1000)));
+      await c.setUser(await User.findByPk(getRandom(1,User.length)));
+      await c.setProduct(await Product.findByPk(getRandom(1,Product.length)));
     })
 
     // Order_products fallido (falta arreglar)
@@ -158,9 +158,9 @@ module.exports = async () => {
     ord.forEach(async(or)=>{
       await or.update(
         {
-          userId: getRandom(1,1000),
-          paymentId: getRandom(1,600),
-          deliveryId: getRandom(1,500)
+          userId: getRandom(1,User.length),
+          paymentId: getRandom(1,Payment.length),
+          deliveryId: getRandom(1,Delivery.length)
         });
     })
 
