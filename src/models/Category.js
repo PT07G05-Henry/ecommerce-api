@@ -17,14 +17,14 @@ module.exports = (sequelize) => {
       set(value) {
         this.setDataValue("name", value.toUpperCase());
       },
-      unique: true
+      unique: false
     },
     image: {
       type: DataTypes.TEXT,
       allowNull: false,
       validate:{
         async customValidator(value){
-          if(!isImgUrl(value)){
+          if(! await isImgUrl(value)){
             throw new Error("Image url is broken");
           }
         }
