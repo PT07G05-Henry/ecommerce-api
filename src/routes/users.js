@@ -92,7 +92,19 @@ router.post("/", async function (req, res) {
   });
 
 router.delete("/", async (req, res) => {
-    //falta escribir acá
+  const { email } = req.body;
+  try {
+    await User.destroy({
+      where: {
+        email: email,
+      },
+    });
+    res.status(200);
+    res.send("User Removed Successfully");
+  } catch (err) {
+    res.status(400);
+    res.send(err.message);
+  }
 });
 
 module.exports = router;
