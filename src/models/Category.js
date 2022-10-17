@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
       set(value) {
         this.setDataValue("name", value.toUpperCase());
       },
-      unique: false
+      unique: true
     },
     image: {
       type: DataTypes.TEXT,
