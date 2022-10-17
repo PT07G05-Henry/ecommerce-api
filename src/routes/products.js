@@ -57,7 +57,7 @@ router.get("/", async (req, res) => {
         p.categories.find((c) => c.name === category)
       );
       if (products.length === 0)
-        return res.send("There are no porducts with thath category in the DB");
+        return res.send("There are no porducts with that category in the DB");
       res.status(200).send(products);
     } else {
       products = await getAllProducts();
