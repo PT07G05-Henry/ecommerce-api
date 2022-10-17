@@ -6,7 +6,6 @@ const { User, Order, Product, Rol, Comment } = require('../db');
 const router = Router();
 
 // Configura las funciones
-let idUser = 1001;
 
 const getDetailUser = async (id) => {
     return await User.findByPk( id )
@@ -54,14 +53,12 @@ router.post("/", async function (req, res) {
     }
     try {
       let newUser = await User.create({
-        id: idUser,
         first_name,
         last_name,
         birth_date,
         email,
         password
       });
-      idUser++;
       await newUser.setRols(req.body.rols);
       res.sendStatus(201);
     } catch (error) {
@@ -70,9 +67,29 @@ router.post("/", async function (req, res) {
     }
   });
 
-router.put("/", async (req, res) => {
-    //falta escribir acá
-});
+  router.put("/", async (req, res) => {
+    const { id, first_name, last_name, birth_date, email, password } = req.body;
+    try {
+      await User.update({ 
+        first_name,
+        last_name,
+        birth_date,
+        email,
+        password,
+      }, 
+      {
+        where: {
+          id: id
+        }
+      });
+    let userUpdate = await getDetailUser(id)
+    res.status(200);
+    res.send(userUpdate);
+    } catch(err) {
+      res.status(400);
+      res.send(err.message);
+    }
+  });
 
 router.delete("/", async (req, res) => {
     //falta escribir acá
