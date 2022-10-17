@@ -30,8 +30,7 @@ module.exports = async () => {
     
     async function fnUsers() {
       for (const u of users) {
-        await User.upsert({
-          id: u.id,
+        await User.create({
           first_name: u.first_name,
           last_name: u.last_name,
           birth_date: u.birth_date,
@@ -45,8 +44,7 @@ module.exports = async () => {
     
     async function fnCategories(){
       for(const c of categories){
-        await Category.upsert({
-          id: c.id,
+        await Category.create({  
           name: c.name,
           image: c.image
         });
@@ -57,7 +55,6 @@ module.exports = async () => {
     async function fnComments(){
       for(const c of comments){
         await Comment.upsert({
-          id: c.id,
           value: c.value,
         });
       }
@@ -66,8 +63,7 @@ module.exports = async () => {
 
     async function fnDeliveries(){
       for(const d of deliveries){
-        await Delivery.upsert({
-          id: d.id,
+        await Delivery.create({
           type: d.type,
           status: d.status,
           shipping_address: d.shipping_address,
@@ -79,8 +75,7 @@ module.exports = async () => {
 
     async function fnOrders(){
       for(const o of orders){
-        await Order.upsert({
-          id: o.id,
+        await Order.create({
           total_price: o.total_price,
           status: o.status,
         });
@@ -90,8 +85,7 @@ module.exports = async () => {
 
     async function fnPayments(){
       for (const p of payments){
-        await Payment.upsert({
-          id: p.id,
+        await Payment.create({
           type: p.type,
           status: p.status,
         });
@@ -101,8 +95,7 @@ module.exports = async () => {
 
     async function fnProducts(){
       for(const p of products){
-        await Product.upsert({
-          id: p.id,
+        await Product.create({
           name: p.name,
           price: p.price,
           description: p.description,
@@ -117,8 +110,7 @@ module.exports = async () => {
 
     async function fnRols(){
       for(const r of rols){
-        await Rol.upsert({
-          id: r.id,
+        await Rol.create({
           type: r.type
         })
       }
