@@ -21,13 +21,6 @@ module.exports = (sequelize) => {
       image: {
         type: DataTypes.TEXT,
         allowNull: false,
-        validate: {
-          isImage(value) {
-            if (/\.(jpg|jpeg|png|webp|avif|gif)$/.test(value)) {
-              throw new Error("Invalid format");
-            }
-          },
-        },
       },
     },
     {
