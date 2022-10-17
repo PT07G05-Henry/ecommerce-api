@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
     {
       product_quantity: {
         type: DataTypes.INTEGER,
+        defaultValue: 1,
       },
     },
     {
