@@ -37,8 +37,11 @@ module.exports = (sequelize) => {
           return JSON.parse(this.getDataValue('images'));
         }, 
         set: function(val) {
+            if(val.length === 0){
+              return this.setDataValue('images',JSON.stringify([{"image":"https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"}]));
+            }
             return this.setDataValue('images', JSON.stringify(val));
-        }
+        },
       },
       rating: {
         type: DataTypes.INTEGER,
