@@ -144,6 +144,13 @@ router.get("/", async (req, res) => {
       totalPage: Math.ceil(products.count / quantity),
       page: page,
       quantity: quantity,
+      query: {
+        page,
+        quantity,
+        orderBy,
+        typeOrder,
+        category,
+        name},
       results: products.rows,
     };
     res.status(200).send(obj);
