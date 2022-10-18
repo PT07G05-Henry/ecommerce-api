@@ -164,7 +164,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async function (req, res) {
   const { name, price, description, stock, images, categories } = req.body;
 
-  if (!name || !price || !description || !stock || !images.length) {
+  if (!name || !price || !description || !stock) {
     res.status(400);
     return res.send("Missing to send mandatory data");
   }
