@@ -39,6 +39,17 @@ module.exports = (sequelize) => {
           return JSON.parse(this.getDataValue("images"));
         },
         set: function (val) {
+          if (val.length === 0) {
+            return this.setDataValue(
+              "images",
+              JSON.stringify([
+                {
+                  image:
+                    "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
+                },
+              ])
+            );
+          }
           return this.setDataValue("images", JSON.stringify(val));
         },
         validate: {
@@ -53,7 +64,7 @@ module.exports = (sequelize) => {
         defaultValue: JSON.stringify([
           {
             image:
-              "https://images-ext-2.discordapp.net/external/mix70TBPVstfi6iIZ_Kq32v0XD5j8zCmDipE7-y_S7U/https/commercial.bunn.com/img/image-not-available.png?width=458&height=458",
+              "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
           },
         ]),
       },
