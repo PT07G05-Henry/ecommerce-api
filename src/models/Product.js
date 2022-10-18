@@ -68,6 +68,7 @@ module.exports = (sequelize) => {
         },
         defaultValue: 0,
       },
+      
       // comments: {
       //   type: DataTypes.ARRAY(DataTypes.TEXT),
       // },
