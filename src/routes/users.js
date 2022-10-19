@@ -7,9 +7,6 @@ const { updateUser } = require("./controllers/users/updateUser");
 
 const router = Router();
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
-
 router.get("/", getUsers);
 
 router.get("/:id", getUserDetail);
