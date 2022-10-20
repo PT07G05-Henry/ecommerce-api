@@ -149,7 +149,7 @@ module.exports = async () => {
     const com = await Comment.findAll();
     com.forEach(async(c)=>{
       await c.setUser(await User.findByPk(getRandom(1,us.length)));
-      await c.setProduct(await Product.findByPk(getRandom(1,Product.length)));
+      await c.setProduct(await Product.findByPk(getRandom(1,pr.length)));
     })
 
     // Order_products fallido (falta arreglar)
