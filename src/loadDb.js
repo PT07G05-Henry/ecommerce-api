@@ -126,10 +126,15 @@ module.exports = async () => {
       return min + Math.floor(Math.random() * (max - min + 1));
     }
 
+    // const cat = await Category.findAndCountAll();
+    // const or = await Order.findAndCountAll();
+
+    const allCat = await Category.findAll();
+    const allOrd = await Order.findAll();
 
     pr.forEach(async(p)=>{
-      await p.addCategory(await Category.findByPk(getRandom(1,Category.length)));
-      await p.addOrder(await Order.findByPk(getRandom(1,Order.length) ));
+      await p.addCategory(await Category.findByPk(getRandom(1,allCat.length)));
+      await p.addOrder(await Order.findByPk(getRandom(1,allOrd.length) ));
     })
     
     
@@ -143,8 +148,8 @@ module.exports = async () => {
     //Comentarios
     const com = await Comment.findAll();
     com.forEach(async(c)=>{
-      await c.setUser(await User.findByPk(getRandom(1,User.length)));
-      await c.setProduct(await Product.findByPk(getRandom(1,Product.length)));
+      await c.setUser(await User.findByPk(getRandom(1,us.length)));
+      await c.setProduct(await Product.findByPk(getRandom(1,pr.length)));
     })
 
     // Order_products fallido (falta arreglar)
