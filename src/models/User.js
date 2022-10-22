@@ -74,7 +74,10 @@ module.exports = (sequelize) => {
       },
       social: {
         type: DataTypes.ENUM,
-        values: ["google", "apple", "github", "auth0"],
+        values: ["google", "apple", "microsoft", "auth0"],
+      },
+      sid: {
+        type: DataTypes.STRING(32),
       },
     },
     {

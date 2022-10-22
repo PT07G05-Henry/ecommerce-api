@@ -31,7 +31,8 @@ module.exports = async () => {
   try {
     async function fnUsers() {
       for (const u of users) {
-        await User.create(u);
+        const user = await User.create(u);
+        user.update({ sid: user.dataValues.id });
       }
     }
     await fnUsers();
