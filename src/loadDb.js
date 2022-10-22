@@ -12,6 +12,8 @@ const {
   Users_rols,
 } = require("./db.js");
 
+const createHash = require("./functions/createHash");
+
 const categories = require("./filesJson/categories.json");
 const comments = require("./filesJson/comments.json");
 const deliveries = require("./filesJson/deliveries.json");
@@ -20,7 +22,6 @@ const payments = require("./filesJson/payments.json");
 const products = require("./filesJson/products.json");
 const users = require("./filesJson/users.json");
 const roles = require("./filesJson/roles.json");
-
 const { setSuperAdmin } = require("./functions/superAdminCreate");
 
 require("dotenv").config();
@@ -32,7 +33,7 @@ module.exports = async () => {
     async function fnUsers() {
       for (const u of users) {
         const user = await User.create(u);
-        user.update({ sid: user.dataValues.id });
+        user.update({ sid: createHash(user.dataValues.email) });
       }
     }
     await fnUsers();
@@ -116,7 +117,7 @@ module.exports = async () => {
       await c.setProduct(await Product.findByPk(getRandom(1, pr.length)));
     });
 
-    // Order_products fallido (falta arreglar)?????
+    // Order_products
     const order_pr = await Orders_products.findAll();
     order_pr.forEach(async (op) => {
       await op.update({ product_quantity: getRandom(1, 10) });
