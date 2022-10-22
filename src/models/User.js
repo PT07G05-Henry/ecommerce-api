@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const createHash = require("../../createHash")
+const createHash = require("../../createHash");
 // Exportamos una función que define el modelo
 // Luego le inyectamos la conexión a sequelize.
 module.exports = (sequelize) => {
@@ -34,7 +34,6 @@ module.exports = (sequelize) => {
       },
       last_name: {
         type: DataTypes.STRING,
-        allowNull: false,
         validate: {
           len: {
             args: [0, 50],
@@ -43,18 +42,17 @@ module.exports = (sequelize) => {
         },
         set(value) {
           this.setDataValue(
-            "last_name",    
+            "last_name",
             value
               .toLowerCase()
               .split(" ")
               .map((w) => w[0].toUpperCase() + w.slice(1))
-              .join(" ") 
+              .join(" ")
           );
         },
       },
       birth_date: {
         type: DataTypes.STRING,
-        allowNull: false,
         validate: {
           isDate: true,
         },
@@ -69,17 +67,17 @@ module.exports = (sequelize) => {
           },
         },
       },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        set(value){
-          this.setDataValue("password", createHash(value))
-        }
-      },
       profile_picture: {
         type: DataTypes.TEXT,
         defaultValue:
           "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+      },
+      social: {
+        type: DataTypes.ENUM,
+        values: ["google", "apple", "microsoft", "auth0"],
+      },
+      sid: {
+        type: DataTypes.STRING(32),
       },
     },
     {
