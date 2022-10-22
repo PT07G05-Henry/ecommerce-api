@@ -6,9 +6,12 @@ const { getUsers } = require("./controllers/users/getUsers");
 const { auth0db } = require("./controllers/users/auth0db");
 const { updateUser } = require("./controllers/users/updateUser");
 
+// Middlewares
+const { isAuthenticated } = require("./middlewares/auth");
+
 const router = Router();
 
-router.get("/", getUsers);
+router.get("/", isAuthenticated, getUsers);
 
 router.post("/auth0", auth0db);
 
