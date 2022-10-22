@@ -8,10 +8,11 @@ const { updateUser } = require("./controllers/users/updateUser");
 
 // Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
+const { isSuperAdmin } = require("./middlewares/superAdmin");
 
 const router = Router();
 
-router.get("/", isAuthenticated, getUsers);
+router.get("/", isAuthenticated, isSuperAdmin, getUsers);
 
 router.post("/auth0", auth0db);
 
