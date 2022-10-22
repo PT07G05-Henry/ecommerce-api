@@ -34,7 +34,6 @@ module.exports = (sequelize) => {
       },
       last_name: {
         type: DataTypes.STRING,
-        // allowNull: false,
         validate: {
           len: {
             args: [0, 50],
@@ -54,7 +53,6 @@ module.exports = (sequelize) => {
       },
       birth_date: {
         type: DataTypes.STRING,
-        // defaultValue: "UNKNOWN",
         validate: {
           isDate: true,
         },
@@ -77,7 +75,6 @@ module.exports = (sequelize) => {
       social: {
         type: DataTypes.ENUM,
         values: ["google", "apple", "github", "auth0"],
-        // allowNull: false,
       },
     },
     {

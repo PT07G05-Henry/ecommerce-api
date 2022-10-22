@@ -6,13 +6,13 @@ const { PORT } = process.env;
 
 const startServer = () => {
   server.listen(PORT, async () => {
-    //await loadDb(); // cargando la base de datos con datos mockeados de la mockapi
+    await loadDb(); // cargando la base de datos con datos mockeados de la mockapi
     console.log("Listening at PORT " + PORT);
   });
 };
 
 const startDB = async () => {
-  return await conn.sync({ force: false });
+  return await conn.sync({ force: true });
 };
 
 const start = async () => {
