@@ -19,8 +19,13 @@ const createOrder = async (req, res) => {
 
     const op = await order.addProducts(product);
 
-    const result = await op[0].update({ product_quantity: quantity });
+    await op[0].update({ product_quantity: quantity });
     //console.log(result);
+    const result = await Order.findOne({
+      where: { id: order.dataValues.id },
+      include: [User, Product],
+    });
+
     res.status(200).json(result);
   } catch (e) {
     console.log("createOrder error!");
