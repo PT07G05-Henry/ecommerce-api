@@ -5,7 +5,7 @@ const getUsersDb = async () => {
     include: [Order, Product, Rol, Comment],
   });
 };
-
+    
 const getUsers = async (req, res) => {
   const email = req.query.email;
   let users = await getUsersDb();
