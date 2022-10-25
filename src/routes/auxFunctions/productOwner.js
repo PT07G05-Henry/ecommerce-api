@@ -1,20 +1,18 @@
 const { Product, Users_rols } = require("../../db");
 
-const isProductOwner = async (idProduct, idUser) => {
+const isProductOwner = async (idProduct, idUserRol) => {
   console.log("idProduct", idProduct);
-  console.log("idUser", idUser);
+  console.log("idUser", idUserRol);
   try {
-    const result = await Product.findAll({
-      where: { id: idProduct },
-      include: [Users_rols],
+    const result = await Product.findOne({
+      where: { id: Number.parseInt(idProduct), usersRolId: idUserRol },
     });
 
-    console.log(result.dataValues.users_rols);
     if (result) {
-      console.log("is true");
+      //console.log("is true");
       return true;
     }
-    console.log("is false");
+    //console.log("is false");
     return false;
   } catch (e) {
     console.log(e);

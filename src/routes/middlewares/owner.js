@@ -8,15 +8,15 @@ const isOwner = async (req, res, next) => {
   try {
     const userDb = await User.findOne({ where: { sid } });
     const user_rol = await Users_rols.findOne({
-      where: { id: userDb.dataValues.id },
+      where: { userId: userDb.dataValues.id },
     });
 
-    //console.log(user_rol);
+    //console.log(user_rol.dataValues);
     switch (item_type) {
       case "PRODUCT":
         console.log("product owner?");
         if (await isProductOwner(id_item, user_rol.dataValues.id)) {
-          console.log("is owner");
+          //console.log("is owner");
           return next();
         }
         break;
