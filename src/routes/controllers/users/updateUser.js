@@ -1,4 +1,4 @@
-const { Usert } = require("../../../db");
+const { User } = require("../../../db");
 
 const updateUser = async (req, res) => {
   // actualizacion de datos de usuarios
