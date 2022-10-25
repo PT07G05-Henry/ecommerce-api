@@ -15,7 +15,7 @@ const router = Router();
 
 router.get("/", isAuthenticated, isSuperAdmin, getUsers);
 
-router.get("/all", getAllUsers);
+router.get("/all", isAuthenticated, isSuperAdmin, getAllUsers);
 
 router.post("/auth0", auth0db);
 
