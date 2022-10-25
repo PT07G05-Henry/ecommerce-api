@@ -1,5 +1,7 @@
+
 const { Product } = require("../../../db");
 const { getProduct } = require("./getProductDetail");
+
 const updateProduct = async (req, res) => {
   const { id, name, price, description, stock, images } = req.body.update;
   try {
@@ -17,7 +19,9 @@ const updateProduct = async (req, res) => {
         },
       }
     );
+
     let productUpdate = await getProduct(id);
+
     res.status(200);
     res.send(productUpdate);
   } catch (err) {
