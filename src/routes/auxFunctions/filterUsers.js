@@ -5,7 +5,8 @@ const filterUsers = async function (
   quantity,
   order = "id",
   typeOrder = "ASC",
-  name
+  name,
+  rol
 ) {
   const pageAsNumber = Number.parseInt(page);
   const quantityAsNumber = Number.parseInt(quantity);
@@ -27,7 +28,12 @@ const filterUsers = async function (
     offset: (page - 1) * quantity,
     order: [[order ? order.toLowerCase() : "id", typeOrder.toUpperCase()]],
     distinct: true, // no eliminar esto, ya que la funcion findAndCountAll se descontrola
-    include: [Comment, Order, Rol],
+    include: rol !=="All" ? [
+      {
+        model: Rol,
+        where: {type: rol}
+      }
+    ] :[Comment, Order, Rol],
     where: name ? { name: { [Op.iLike]: `%${name}%` } } : {},
   });
   return usersPerPage;
