@@ -6,14 +6,14 @@ const updateProduct = async (req, res) => {
     await Product.update(
       {
         name,
-        price, // convertir a float!!!
+        price: Number.parseFloat(price).toFixed(2), // convertir a float!!!
         description,
-        stock,
+        stock: Number.parseInt(stock),
         images,
       },
       {
         where: {
-          id,
+          id: Number.parseInt(id),
         },
       }
     );
