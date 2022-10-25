@@ -12,21 +12,14 @@ const credentials = { key: privateKey, cert: certificate };
 
 const httpsServer = https.createServer(credentials, server);
 
-/*const startServer = () => {
-  server.listen(PORT, async () => {
-   // await loadDb(); // cargando la base de datos con datos mockeados de la mockapi
-    console.log("Listening at PORT " + PORT);
-  });
-};*/
-
 const startServer = () => {
-  httpsServer.listen(PORT, () => {
+  httpsServer.listen(PORT, async () => {
     console.log("Listening at PORT " + PORT);
+    await loadDb();
   });
 };
 
 const startDB = async () => {
-  await loadDb();
   return await conn.sync({ force: true });
 };
 
