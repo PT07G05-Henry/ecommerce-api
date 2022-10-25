@@ -1,22 +1,23 @@
 const { Product } = require("../../../db");
+const { getProduct } = require("./getProductDetail");
 const updateProduct = async (req, res) => {
-  const { id, name, price, description, stock, images } = req.body;
+  const { id, name, price, description, stock, images } = req.body.update;
   try {
     await Product.update(
       {
-        name: name,
-        price: price,
-        description: description,
-        stock: stock,
-        images: images,
+        name,
+        price, // convertir a float!!!
+        description,
+        stock,
+        images,
       },
       {
         where: {
-          id: id,
+          id,
         },
       }
     );
-    let productUpdate = await getProductDetail(id);
+    let productUpdate = await getProduct(id);
     res.status(200);
     res.send(productUpdate);
   } catch (err) {
