@@ -15,12 +15,12 @@ const httpsServer = https.createServer(credentials, server);
 const startServer = () => {
   httpsServer.listen(PORT, async () => {
     console.log("Listening at PORT " + PORT);
-    await loadDb();
+    //await loadDb();
   });
 };
 
 const startDB = async () => {
-  return await conn.sync({ force: true });
+  return await conn.sync({ force: false });
 };
 
 const start = async () => {
