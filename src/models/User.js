@@ -1,5 +1,4 @@
 const { DataTypes } = require("sequelize");
-const createHash = require("../../createHash");
 // Exportamos una función que define el modelo
 // Luego le inyectamos la conexión a sequelize.
 module.exports = (sequelize) => {

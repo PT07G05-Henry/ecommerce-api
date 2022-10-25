@@ -5,13 +5,17 @@ const { createProduct } = require("./controllers/products/createProduct");
 const { updateProduct } = require("./controllers/products/updateProduct");
 const { deleteProduct } = require("./controllers/products/deleteProduct");
 
+//Middlewares
+const { isAuthenticated } = require("./middlewares/auth");
+const { isAdmin } = require("./middlewares/admin");
+
 const router = Router();
 
 router.get("/:id", getProductDetail);
 
 router.get("/", getProducts);
 
-router.post("/", createProduct);
+router.post("/", isAuthenticated, isAdmin, createProduct);
 
 router.put("/", updateProduct);
 

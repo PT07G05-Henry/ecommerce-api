@@ -3,6 +3,7 @@ const { User, Order, Product, Rol, Comment } = require("../../../db");
 const getUsersDb = async () => {
   return User.findAll({
     include: [Order, Product, Rol, Comment],
+    orderBy: [["id", "ASC"]],
   });
 };
 
