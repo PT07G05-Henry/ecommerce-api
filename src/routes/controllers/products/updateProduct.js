@@ -1,31 +1,25 @@
-const { Product, Category } = require("../../../db");
+const { Product } = require("../../../db");
+const { getProduct } = require("./getProductDetail");
 
 const updateProduct = async (req, res) => {
-  const { id, name, price, description, stock, images } = req.body;
+  const { id, name, price, description, stock, images } = req.body.update;
   try {
     await Product.update(
       {
-        name: name,
-        price: price,
-        description: description,
-        stock: stock,
-        images: images,
+        name,
+        price: Number.parseFloat(price).toFixed(2), // convertir a float!!!
+        description,
+        stock: Number.parseInt(stock),
+        images,
       },
       {
         where: {
-          id: id,
+          id: Number.parseInt(id),
         },
       }
     );
-    let productUpdate = await Product.findByPk(id, {
-      include: {
-        model: Category,
-        attributes: ["name"],
-        through: {
-          attributes: [],
-        },
-      },
-    });
+
+    let productUpdate = await getProduct(id);
     res.status(200);
     res.send(productUpdate);
   } catch (err) {

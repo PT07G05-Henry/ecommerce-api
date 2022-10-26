@@ -1,7 +1,7 @@
 [
   {
     "first_name": "FEDERICO",
-    "last_name": "INTERLANI ZOIREFF",
+    "last_name": "SUPERADMIN",
     "email": "ing.finterlandi@gmail.com",
     "profile_picture": "https://lh3.googleusercontent.com/a/ALm5wu3Tn-D7Z8B53ZLiMhjL-wVS67uegQ4CNpLkW6UD0A=s96-c",
     "social": "google"
@@ -20,14 +20,7 @@
     "last_name": "Villacorta",
     "email": "vilajul3@gmail.com",
     "password": "ldkICIqG",
-    "social": "google"
-  },
-  {
-    "first_name": "Jorge",
-    "last_name": "Andrade",
-    "birth_date": "7/25/1975",
-    "email": "profesorjand@gmail.com",
-    "profile_picture": "http://dummyimage.com/196x100.png/dddddd/000000",
+    "profile_picture": "https://e7.pngegg.com/pngimages/530/46/png-clipart-computer-icons-user-system-administrator-vijay-miscellaneous-recruiter.png",
     "social": "google"
   },
   {
@@ -36,7 +29,7 @@
     "birth_date": "12/11/1967",
     "email": "frankitooserafini493@gmail.com",
     "password": "ADM0MdZFdpY",
-    "profile_picture": "http://dummyimage.com/177x100.png/dddddd/000000",
+    "profile_picture": "https://www.assignmentdone.co.uk/wp-content/uploads/2018/12/user-placeholder.png",
     "social": "google"
   },
   {
@@ -49,7 +42,7 @@
     "first_name": "Matias",
     "last_name": "Villagra",
     "email": "mativillagra98@gmail.com",
-    "profile_picture": "http://dummyimage.com/202x100.png/dddddd/000000",
+    "profile_picture": "https://e7.pngegg.com/pngimages/530/46/png-clipart-computer-icons-user-system-administrator-vijay-miscellaneous-recruiter.png",
     "social": "google"
   },
   {
@@ -57,21 +50,27 @@
     "last_name": "Argañaras",
     "email": "tobiasarganiaras12@hotmail.com",
     "password": "sZUfbS",
-    "profile_picture": "http://dummyimage.com/153x100.png/dddddd/000000",
+    "profile_picture": "https://www.assignmentdone.co.uk/wp-content/uploads/2018/12/user-placeholder.png",
     "social": "google"
   },
   {
-    "first_name": "Alameda",
-    "last_name": "Edie",
-    "email": "aedie0@alibaba.com",
-    "profile_picture": "http://dummyimage.com/221x100.png/dddddd/000000",
-    "social": "apple"
+    "first_name": "Jorge",
+    "last_name": "User",
+    "email": "profesorjand@gmail.com",
+    "social": "google",
+    "profile_picture": "https://e7.pngegg.com/pngimages/530/46/png-clipart-computer-icons-user-system-administrator-vijay-miscellaneous-recruiter.png"
   },
   {
-    "first_name": "Kania",
-    "last_name": "Presdie",
-    "email": "kpresdie1@si.edu",
-    "social": "apple"
+    "first_name": "Jorge",
+    "last_name": "Admin",
+    "email": "rapperboyjorge@gmail.com",
+    "social": "google"
+  },
+  {
+    "first_name": "FEDERICO",
+    "last_name": "ADMIN",
+    "email": "interlandizoireff@gmail.com",
+    "social": "google"
   },
   {
     "first_name": "Janka",
