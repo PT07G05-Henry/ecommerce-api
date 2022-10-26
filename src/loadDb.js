@@ -104,10 +104,22 @@ module.exports = async () => {
       await p.addOrder(await Order.findByPk(getRandom(1, allOrd.length)));
     });
 
-    // Usuarios
+    // Usuarios - Roles
+
+    await setRol(users[0], "SUPERADMIN"); // fede
+    await setRol(users[1], "SUPERADMIN"); // chris
+    await setRol(users[2], "ADMIN"); // julio
+    await setRol(users[3], "USER"); // franco
+    await setRol(users[4], "SUPERADMIN"); // ramiro
+    await setRol(users[5], "ADMIN"); // matias
+    await setRol(users[6], "USER"); // tobias
+    await setRol(users[7], "USER"); // jorge
+    await setRol(users[8], "ADMIN"); // jorge2
+    await setRol(users[9], "ADMIN"); // fede
+
     const us = await User.findAll();
     us.forEach(async (u) => {
-      if (u.id > 8) await u.addRol(await Rol.findByPk(getRandom(1, 2)));
+      if (u.id > 10) await u.addRol(await Rol.findByPk(getRandom(1, 2)));
     });
 
     //Comentarios
@@ -133,22 +145,13 @@ module.exports = async () => {
       });
     });
 
+    // Owner products
     const admins = await Users_rols.findAll({ where: { rolId: 1 }, limit: 5 });
     pr.forEach(async (p) => {
       await p.update({
         usersRolId: admins[getRandom(0, admins.length - 1)].dataValues.id,
       });
     });
-
-    await setRol(users[0], "USER"); // fede
-    await setRol(users[1], "SUPERADMIN"); // chris
-    await setRol(users[2], "ADMIN"); // julio
-    await setRol(users[3], "USER"); // franco
-    await setRol(users[4], "SUPERADMIN"); // ramiro
-    await setRol(users[5], "ADMIN"); // matias
-    await setRol(users[6], "USER"); // tobias
-    await setRol(users[7], "USER"); // jorge
-    await setRol(users[8], "ADMIN"); // jorge2
 
     console.log("DB LOADED SUCCESSFULLY!");
     return;
