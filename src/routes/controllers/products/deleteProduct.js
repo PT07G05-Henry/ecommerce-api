@@ -4,7 +4,7 @@ const deleteProduct = async (req, res) => {
   try {
     await Product.destroy({
       where: {
-        id: id,
+        id: Number.parseInt(id),
       },
     });
     res.status(200);

@@ -22,7 +22,7 @@ const payments = require("./filesJson/payments.json");
 const products = require("./filesJson/products.json");
 const users = require("./filesJson/users.json");
 const roles = require("./filesJson/roles.json");
-const { setSuperAdmin } = require("./functions/superAdminCreate");
+const { setRol } = require("./functions/setRol");
 
 require("dotenv").config();
 const { MOCKAPI, APIKEY } = process.env;
@@ -140,14 +140,15 @@ module.exports = async () => {
       });
     });
 
-    await setSuperAdmin(users[0]); // fede
-    await setSuperAdmin(users[1]); // chris
-    await setSuperAdmin(users[2]); // julio
-    await setSuperAdmin(users[3]); // jorge
-    await setSuperAdmin(users[4]); // franco
-    await setSuperAdmin(users[5]); // ramiro
-    await setSuperAdmin(users[6]); // matias
-    await setSuperAdmin(users[7]); // tobias
+    await setRol(users[0], "USER"); // fede
+    await setRol(users[1], "SUPERADMIN"); // chris
+    await setRol(users[2], "ADMIN"); // julio
+    await setRol(users[3], "USER"); // franco
+    await setRol(users[4], "SUPERADMIN"); // ramiro
+    await setRol(users[5], "ADMIN"); // matias
+    await setRol(users[6], "USER"); // tobias
+    await setRol(users[7], "USER"); // jorge
+    await setRol(users[8], "ADMIN"); // jorge2
 
     console.log("DB LOADED SUCCESSFULLY!");
     return;

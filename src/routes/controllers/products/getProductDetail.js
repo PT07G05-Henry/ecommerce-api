@@ -19,4 +19,4 @@ const getProductDetail = async (req, res) => {
     : res.status(404).send({ error: "Product Not Found" });
 };
 
-module.exports = { getProductDetail };
+module.exports = { getProductDetail, getProduct };

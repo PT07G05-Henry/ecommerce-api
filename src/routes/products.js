@@ -8,6 +8,7 @@ const { deleteProduct } = require("./controllers/products/deleteProduct");
 //Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
 const { isAdmin } = require("./middlewares/admin");
+const { isOwner } = require("./middlewares/owner");
 
 const router = Router();
 
@@ -17,8 +18,8 @@ router.get("/", getProducts);
 
 router.post("/", isAuthenticated, isAdmin, createProduct);
 
-router.put("/", updateProduct);
+router.put("/", isAuthenticated, isAdmin, isOwner, updateProduct);
 
-router.delete("/", deleteProduct);
+router.delete("/", isAuthenticated, isAdmin, isOwner, deleteProduct);
 
 module.exports = router;
