@@ -3,7 +3,7 @@ require("dotenv").config();
 const { PORT } = process.env;
 
 const getAllUsers = async (req, res) => {
-  let { name, page = 1, quantity = 10, typeOrder, orderBy, rol } = req.query;
+  let { name, page = 1, quantity = 10, typeOrder, orderBy, rol , sid} = req.query;
 
   try {
     let users = await filterUsers(page, quantity, orderBy, typeOrder, name, rol);
@@ -51,6 +51,7 @@ const getAllUsers = async (req, res) => {
         orderBy,
         typeOrder,
         name,
+        sid
       },
       results: users.rows,
     };

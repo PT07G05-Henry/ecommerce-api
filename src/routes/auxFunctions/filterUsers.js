@@ -6,7 +6,7 @@ const filterUsers = async function (
   order = "id",
   typeOrder = "ASC",
   name,
-  rol
+  rol = "All"
 ) {
   const pageAsNumber = Number.parseInt(page);
   const quantityAsNumber = Number.parseInt(quantity);

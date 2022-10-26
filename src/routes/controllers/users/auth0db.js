@@ -17,6 +17,9 @@ const auth0db = async (req, res) => {
           last_name: userDb.dataValues.last_name,
           email: userDb.dataValues.email,
           sid,
+          id: userDb.dataValues.id,
+          profile_picture: userDb.dataValues.profile_picture,
+          birth_date: userDb.dataValues.birth_date
         },
         roles: userDb.dataValues.rols.map((r) => r.type),
       });

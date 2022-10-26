@@ -23,6 +23,7 @@ module.exports = (sequelize) => {
         set(value) {
           this.setDataValue(
             "first_name",
+            value && 
             value
               .toLowerCase()
               .split(" ")
@@ -42,6 +43,7 @@ module.exports = (sequelize) => {
         set(value) {
           this.setDataValue(
             "last_name",
+            value &&
             value
               .toLowerCase()
               .split(" ")
