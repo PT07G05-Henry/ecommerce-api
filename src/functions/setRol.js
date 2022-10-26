@@ -5,8 +5,6 @@ const setRol = async (user, rol) => {
   //console.log(superAdmin);
   switch (rol) {
     case "SUPERADMIN":
-      await userRol.addRols(1);
-      await userRol.addRols(2);
       await userRol.addRols(3);
       return;
     case "ADMIN":
