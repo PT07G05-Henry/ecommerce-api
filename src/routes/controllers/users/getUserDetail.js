@@ -10,6 +10,6 @@ const getUserDetail = async (req, res) => {
   user
     ? res.status(200).send(user)
     : res.status(404).send({ error: "User Not Found" });
-};
+};   
 
 module.exports = { getUserDetail };

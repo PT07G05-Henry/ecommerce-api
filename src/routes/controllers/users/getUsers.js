@@ -6,7 +6,7 @@ const getUsersDb = async () => {
     orderBy: [["id", "ASC"]],
   });
 };
-
+    
 const getUsers = async (req, res) => {
   const email = req.query.email;
   let users = await getUsersDb();
