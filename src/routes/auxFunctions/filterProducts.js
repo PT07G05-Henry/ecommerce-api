@@ -26,7 +26,7 @@ const filterProducts = async function (
   let productsPerPage = await Product.findAndCountAll({
     limit: quantity,
     offset: (page - 1) * quantity,
-    order: [[order ? order.toLowerCase() : "id", typeOrder.toUpperCase()]],
+    order: [[order ? order : "id", typeOrder.toUpperCase()]],
     distinct: true, // no eliminar esto, ya que la funcion findAndCountAll se descontrola
     include: category
       ? [
