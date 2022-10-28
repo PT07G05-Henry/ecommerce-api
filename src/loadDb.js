@@ -140,9 +140,12 @@ module.exports = async () => {
     const pay = await Payment.findAll();
     const del = await Delivery.findAll();
 
+    const users2 = await Users_rols.findAll({ where: { rolId: 2 } });
+    //console.log(users2);
     ord.forEach(async (or) => {
+      const random = getRandom(0, users2.length - 1);
       await or.update({
-        userId: getRandom(1, us.length),
+        userId: users2[random].dataValues.userId,
         paymentId: getRandom(1, pay.length),
         deliveryId: getRandom(1, del.length),
       });
