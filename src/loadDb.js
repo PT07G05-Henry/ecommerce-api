@@ -150,7 +150,12 @@ module.exports = async () => {
 
     // Owner products
     const admins = await Users_rols.findAll({ where: { rolId: 1 } });
-    pr.forEach(async (p) => {
+    pr.forEach(async (p, i) => {
+      if (i === 2 || i === 3) {
+        await p.setUser(await admins[2].dataValues.userId);
+        await p.setUsers_rol(await admins[2].dataValues.id);
+        return;
+      }
       const random = getRandom(0, admins.length - 1);
       await p.setUser(await admins[random].dataValues.userId);
       await p.setUsers_rol(await admins[random].dataValues.id);
