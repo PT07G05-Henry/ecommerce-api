@@ -9,20 +9,20 @@ const { updateCategory } = require("./controllers/categories/updateCategory");
 
 // Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
-const { isSuperAdmin } = require("./middlewares/superAdmin.js");
-const { isSuperAdminOrAdmin } = require("./middlewares/superAdminOrAdmin.js");
+//const { isSuperAdmin } = require("./middlewares/superAdmin.js");
+//const { isSuperAdminOrAdmin } = require("./middlewares/superAdminOrAdmin.js");
 const { isAdmin } = require("./middlewares/admin");
-const { isOwner } = require("./middlewares/owner");
+//const { isOwner } = require("./middlewares/owner");
 
 const router = Router();
 
 router.get("/", getCategories);
 
-router.post("/", isAuthenticated, isSuperAdminOrAdmin, createCategory);
+router.post("/", isAuthenticated, isAdmin, createCategory);
 
-router.put("/", isAuthenticated, isSuperAdminOrAdmin, updateCategory);
+router.put("/", isAuthenticated, isAdmin, updateCategory);
 
-router.delete("/", isAuthenticated, isSuperAdminOrAdmin, deleteCategory);
+router.delete("/", isAuthenticated, isAdmin, deleteCategory);
 
 router.all("*", async (req, res) => {
   res.redirect("/");
