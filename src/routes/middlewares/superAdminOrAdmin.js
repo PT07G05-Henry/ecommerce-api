@@ -7,7 +7,7 @@ const isSuperAdminOrAdmin = async (req, res, next) => {
   try {
     const userDb = await User.findOne({ where: { sid } });
     const rolesUser = await userDb.getRols();
-    if (rolesUser.find((r) => r.dataValues.type === ("Superadmin" || "Admin"))) {
+    if (rolesUser.find((r) => r.dataValues.type === "Superadmin" || r.dataValues.type ==="Admin")) {
       next();
     } else
       res
