@@ -8,7 +8,7 @@ const createCategory = async (req, res) => {
   }
   try {
     await Category.create(req.body);
-    res.sendStatus(201);
+    res.status(200).send(await Category.findAll());
   } catch (err) {
     res.status(400);
     res.send(err.message);

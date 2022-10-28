@@ -9,6 +9,7 @@ const getProducts = async (req, res) => {
     category,
     typeOrder = "ASC",
     orderBy,
+    userId
   } = req.query;
 
   try {
@@ -18,7 +19,8 @@ const getProducts = async (req, res) => {
       orderBy,
       typeOrder,
       category,
-      name
+      name,
+      userId
     );
     if (products.length === 0)
       return res.send("There are no products loaded in the DB");
