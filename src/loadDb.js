@@ -149,11 +149,11 @@ module.exports = async () => {
     });
 
     // Owner products
-    const admins = await Users_rols.findAll({ where: { rolId: 1 }, limit: 5 });
+    const admins = await Users_rols.findAll({ where: { rolId: 1 } });
     pr.forEach(async (p) => {
-      await p.update({
-        usersRolId: admins[getRandom(0, admins.length - 1)].dataValues.id,
-      });
+      const random = getRandom(0, admins.length - 1);
+      await p.setUser(await admins[random].dataValues.userId);
+      await p.setUsers_rol(await admins[random].dataValues.id);
     });
 
     console.log("DB LOADED SUCCESSFULLY!");
