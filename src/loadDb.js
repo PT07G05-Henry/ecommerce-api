@@ -137,11 +137,14 @@ module.exports = async () => {
 
     // Orders
     const ord = await Order.findAll();
+    const pay = await Payment.findAll();
+    const del = await Delivery.findAll();
+
     ord.forEach(async (or) => {
       await or.update({
-        userId: getRandom(1, User.length),
-        paymentId: getRandom(1, Payment.length),
-        deliveryId: getRandom(1, Delivery.length),
+        userId: getRandom(1, us.length),
+        paymentId: getRandom(1, pay.length),
+        deliveryId: getRandom(1, del.length),
       });
     });
 
