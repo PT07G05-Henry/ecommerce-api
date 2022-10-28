@@ -13,5 +13,8 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    rating: {
+      type: DataTypes.INTEGER,
+    },
   });
 };
