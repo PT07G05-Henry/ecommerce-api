@@ -7,7 +7,7 @@ const getProducts = async (req, res) => {
     page = 1,
     quantity = 10,
     category,
-    typeOrder,
+    typeOrder = "ASC",
     orderBy,
     userId
   } = req.query;
