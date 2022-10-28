@@ -13,8 +13,22 @@ const getAllOrdersDb = async function (userId, status, order) {
             model: User,
             where: { id: userId },
           },
+          {
+            model: Delivery,
+          },
+          {
+            model: Payment,
+          },
         ]
-      : [{ model: User }],
+      : [
+          { model: User },
+          {
+            model: Delivery,
+          },
+          {
+            model: Payment,
+          },
+        ],
     order: order ? [["total_price", order]] : [["id", "asc"]],
   });
   return orders;
