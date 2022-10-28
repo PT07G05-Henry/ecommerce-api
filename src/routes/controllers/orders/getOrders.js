@@ -17,6 +17,9 @@ const getOrdersDb = async function (userDb, status, order) {
         {
           model: Payment,
         },
+        {
+          model: User,
+        },
       ],
     });
     //console.log(ordersAdmin.dataValues);
