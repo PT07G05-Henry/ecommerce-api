@@ -8,12 +8,13 @@ const { updateOrder } = require("./controllers/orders/updateOrder");
 //Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
 const { isUser } = require("./middlewares/user");
+const { isOwner } = require("./middlewares/owner");
 
 const router = Router();
 
-router.get("/", getOrders);
+router.get("/", isAuthenticated, getOrders);
 
-router.get("/:id", getOrderDetail);
+router.get("/:id", isAuthenticated, getOrderDetail);
 
 router.post("/", isAuthenticated, isUser, createOrder);
 
