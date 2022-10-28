@@ -137,20 +137,22 @@ module.exports = async () => {
 
     // Orders
     const ord = await Order.findAll();
+    const pay = await Payment.findAll();
+    const del = await Delivery.findAll();
     ord.forEach(async (or) => {
       await or.update({
-        userId: getRandom(1, User.length),
-        paymentId: getRandom(1, Payment.length),
-        deliveryId: getRandom(1, Delivery.length),
+        userId: getRandom(1, us.length),
+        paymentId: getRandom(1, pay.length),
+        deliveryId: getRandom(1, del.length),
       });
     });
 
     // Owner products
-    const admins = await Users_rols.findAll({ where: { rolId: 1 }, limit: 5 });
+    const admins = await Users_rols.findAll({ where: { rolId: 1 } });
     pr.forEach(async (p) => {
-      await p.update({
-        usersRolId: admins[getRandom(0, admins.length - 1)].dataValues.id,
-      });
+      const random = getRandom(0, admins.length - 1);
+      await p.setUser(await admins[random].dataValues.userId);
+      await p.setUsers_rol(await admins[random].dataValues.id);
     });
 
     console.log("DB LOADED SUCCESSFULLY!");
