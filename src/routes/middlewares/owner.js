@@ -7,32 +7,39 @@ const isOwner = async (req, res, next) => {
   //console.log("sid", sid);
   try {
     const userDb = await User.findOne({ where: { sid } });
+    const rolesUser = await userDb.getRols();
     const user_rol = await Users_rols.findOne({
       where: { userId: userDb.dataValues.id },
     });
 
-    //console.log(user_rol.dataValues);
-    switch (item_type) {
-      case "PRODUCT":
-        console.log("product owner?");
-        if (await isProductOwner(id_item, user_rol.dataValues.id)) {
-          //console.log("is owner");
-          return next();
-        }
-        break;
-      case "COMMENT":
-        console.log("comment owner?");
-        break;
+    //console.log(rolesUser[0].dataValues);
+    // verify if the user is superAdmin first
+    if (rolesUser.find((r) => r.dataValues.type === "Superadmin")) {
+      //console.log("Is superadmin!");
+      next();
+    } else {
+      switch (itemType) {
+        case "PRODUCT":
+          console.log("product owner?");
+          if (await isProductOwner(idItem, user_rol.dataValues.id)) {
+            //console.log("is owner");
+            return next();
+          }
+          break;
+        case "COMMENT":
+          console.log("comment owner?");
+          break;
 
-      case "ORDER":
-        console.log("order owner?");
-        break;
-      default:
-        break;
+        case "ORDER":
+          console.log("order owner?");
+          break;
+        default:
+          break;
+      }
+      res
+        .status(403)
+        .json({ error: "permission", message: "You are not the owner" });
     }
-    res
-      .status(403)
-      .json({ error: "permission", message: "You are not the owner" });
   } catch (e) {
     console.log("error isOwner");
     res.status(403).send(e);
