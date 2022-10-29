@@ -18,7 +18,7 @@ router.get("/", getProducts);
 
 router.post("/", isAuthenticated, isAdmin, createProduct);
 
-router.put("/", isAuthenticated, isAdmin, isOwner, updateProduct);
+router.put("/", isAuthenticated, isAdmin, updateProduct);
 
 router.delete("/", isAuthenticated, isAdmin, isOwner, deleteProduct);
 
