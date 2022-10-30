@@ -1,13 +1,18 @@
-const { Product, Category } = require("../../../db");
+const { Product, Category, Comment } = require("../../../db");
 const getProduct = async (id) => {
   return await Product.findByPk(id, {
-    include: {
-      model: Category,
-      attributes: ["name"],
-      through: {
-        attributes: [],
+    include: [
+      {
+        model: Category,
+        attributes: ["name","id"],
+        through: {
+          attributes: [],
+        },
       },
-    },
+      {
+        model: Comment
+      }
+    ],
   });
 };
 
