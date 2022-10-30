@@ -7,6 +7,7 @@ const orderRoute = require("./orders");
 const paymentRoute = require("./payments");
 const productRoute = require("./products");
 const userRoute = require("./users");
+const emailRoute = require("./email")
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -29,6 +30,8 @@ router.use("/payments", paymentRoute);
 router.use("/products", productRoute);
 
 router.use("/users", userRoute);
+
+router.use("/email", emailRoute);
 
 router.all("*", (req, res) => {
   res.redirect("/");
