@@ -1,13 +1,13 @@
-const { Product, Users_rols } = require("../../db");
+const { Product } = require("../../db");
 
 const isProductOwner = async (idProduct, idUserRol) => {
-  console.log("idProduct", idProduct);
-  console.log("idUser", idUserRol);
+  //console.log("idProduct", idProduct);
+  //console.log("idUser", idUserRol);
   try {
     const result = await Product.findOne({
       where: { id: Number.parseInt(idProduct), usersRolId: idUserRol },
     });
-
+    //console.log(result);
     if (result) {
       //console.log("is true");
       return true;
