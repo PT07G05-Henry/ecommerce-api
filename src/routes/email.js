@@ -12,7 +12,7 @@ const { isAdmin } = require("./middlewares/admin");
 
 const router = Router();
 
-router.post("/send", sendEmail);
+router.post("/send", isAuthenticated, sendEmail);
 
 router.all("*", async (req, res) => {
   res.redirect("/");
