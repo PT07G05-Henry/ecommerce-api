@@ -2,6 +2,14 @@
 
 ## API ENDPOINT V1
 
+### INFO PARA LAS PRUEBAS:
+
+Con los siguientes sid se pueden probar varios roles:
+
+sid=03agoldg SUPERADMIN
+sid=029f05mn ADMIN
+sid=034lh6rt USER
+
 ### PRODUCTS
 
 **get all**
