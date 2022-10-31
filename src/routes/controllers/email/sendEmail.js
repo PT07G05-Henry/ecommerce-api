@@ -67,12 +67,9 @@ const sendEmail = async (req, res) => {
     };
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
-        console.log(err);
         return res.status(404).send("Error sending Email");
       }
-      console.log("Mensaje enviado: %s", info.accepted);
-      console.log("Url del message: %s", nodemailer.getTestMessageUrl(info));
-      return res.status(200).send("Mail was sended");
+      return res.status(200).send({status:"Sended", info});
     });
   });
 };
