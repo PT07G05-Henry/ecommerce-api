@@ -198,7 +198,7 @@ query: sid ---> Session ID from auth0
 body{
 "value" : {value}, STRING required
 "productId" : {productId} STRING required
-"rating" : {rating} STRING required ["0", "1", "2", "3", "4", "5"]
+"rating" : {rating} STRING required ["1", "2", "3", "4", "5"]
 }
 
 **update comment**
