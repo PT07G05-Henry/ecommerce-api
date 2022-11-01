@@ -4,7 +4,8 @@ require("dotenv").config();
 
 const { ACCESS_TOKEN_TEST_MP } = process.env;
 
-const createLinkMP = async (req, res) => {// se comporta como un POST para mandar body
+const createLinkMP = async (req, res) => {
+  // se comporta como un POST para mandar body
   // res.json(req.body); // DESGLOZAR LOS DATOS NECESARIOS PARA MANDAR A LA API DE MERCADO PAGO
   // HAY QUE CREAR UN OBJETO DATA DESDE req.body con el formato que exige MP
   /*
@@ -25,7 +26,9 @@ const createLinkMP = async (req, res) => {// se comporta como un POST para manda
 ]
   
   */
-  const dat = req.body.products;
+
+  const data = req.body.mercadoData;
+  console.log(data);
   const id_orden = req.id_orden; // Me lo traigo del middleware /middlewares/createOrder.js
 
   mercadopago.configure({
@@ -41,7 +44,7 @@ const createLinkMP = async (req, res) => {// se comporta como un POST para manda
   let preference = {
     //podemos hacer un map de varios productos depende de como lo manden
 
-    items: dat,
+    items: data,
     external_reference: `${id_orden}`, // por query le paso el numero de orden
     payment_methods: {
       exclude_payment_types: [
@@ -59,6 +62,8 @@ const createLinkMP = async (req, res) => {// se comporta como un POST para manda
       pending: `${protocol}://${host}:${port}/mercado/notificacion`,
     },
   };
+  //console.log(req.body);
+  //res.send("mercado controller");
   mercadopago.preferences
     .create(preference)
     .then((r) => {
@@ -66,7 +71,7 @@ const createLinkMP = async (req, res) => {// se comporta como un POST para manda
     })
     .catch((error) => {
       console.log(error);
-      res.json(error)
+      res.json(error);
     });
 };
 
@@ -78,7 +83,7 @@ const notificacionorden = (req, res) => {
   console.log("notificaciones");
   console.log(respuesta);
 
-  res.send("noti");
+  res.redirect("https://localhost:3000/");
 };
 
 module.exports = { createLinkMP, notificacionorden };

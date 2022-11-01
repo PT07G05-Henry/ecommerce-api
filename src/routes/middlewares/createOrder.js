@@ -1,41 +1,53 @@
 const { Order, User, Product, Op } = require("../../db");
-const url = require('url');
+const url = require("url");
 const createOrder = async (req, res, next) => {
   //falta escribir acá
   try {
     const { sid } = req.query;
-    const { products, quantity , total_price} = req.body;
-    //console.log("aca productos",products);
+    const products = req.body;
+    //console.log("aca productos", products);
     const userDb = await User.findOne({ where: { sid } });
-    const product = await Product.findAll({where:{id:{[Op.in]:products.map((e)=>e.id)}}}); //solo me trae 1 producto
-
+    //const product = await Product.findAll({where:{id:{[Op.in]:products.map((e)=>e.id)}}});
+    const productsDb = await Product.findAll({
+      where: { id: { [Op.in]: products.map((e) => e.productId) } },
+    });
     //create order
-    //console.log(product.price);
+
+    const totalPrice = productsDb
+      .map((p, i) => p.dataValues.price * products[i].quantity)
+      .reduce((total, item) => total + item)
+      .toFixed(2);
+
     const order = await Order.create({
       status: "Pending",
-      total_price: total_price,
+      total_price: totalPrice,
     });
     // user - order relation
     await userDb.addOrder(order);
 
-    const op = await order.addProducts(product);
+    const op = await order.addProducts(productsDb);
 
-    await op[0].update({ product_quantity: quantity }); // para solo 1 producto? y los demas ?
-    //console.log(result);
-    const result = await Order.findOne({
-      where: { id: order.dataValues.id },
-      include: [User, Product],
+    products.forEach(
+      async (p, i) => await op[i].update({ product_quantity: p.quantity })
+    );
+
+    const data = products.map((p, i) => {
+      return {
+        title: productsDb[i].dataValues.name,
+        quantity: p.quantity,
+        currency_id: "ARS",
+        unit_price: productsDb[i].dataValues.price,
+      };
     });
-    //console.log("result dataValues",result.dataValues);
 
-    //res.status(200).json(result);
-    req.id_order = order.dataValues.id
+    req.body.mercadoData = data;
+    req.id_order = order.dataValues.id;
     next();
   } catch (e) {
     console.log("createOrder error!");
-    console.log(e.message)
+    console.log(e.message);
     res.status(400).json({ error: e.message, message: "Cant create order" });
   }
 };
 
-module.exports =  createOrder ;
+module.exports = createOrder;
