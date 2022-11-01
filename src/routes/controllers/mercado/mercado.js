@@ -5,31 +5,9 @@ require("dotenv").config();
 const { ACCESS_TOKEN_TEST_MP } = process.env;
 
 const createLinkMP = async (req, res) => {
-  // se comporta como un POST para mandar body
-  // res.json(req.body); // DESGLOZAR LOS DATOS NECESARIOS PARA MANDAR A LA API DE MERCADO PAGO
-  // HAY QUE CREAR UN OBJETO DATA DESDE req.body con el formato que exige MP
-  /*
-  Como minimo:
-  [
-    {
-        "title": "Placa Base4",
-        "quantity": 1,
-        "currency_id": "ARS",
-        "unit_price": 10.5
-    },
-    {
-        "title": "Placa Base5",
-        "quantity": 1,
-        "currency_id": "ARS",
-        "unit_price": 10.5
-    }
-]
-  
-  */
-
   const data = req.body.mercadoData;
   console.log(data);
-  const id_orden = req.id_orden; // Me lo traigo del middleware /middlewares/createOrder.js
+  const id_orden = req.id_orden;
 
   mercadopago.configure({
     access_token: ACCESS_TOKEN_TEST_MP,
@@ -42,8 +20,6 @@ const createLinkMP = async (req, res) => {
   const query = req.query;
 
   let preference = {
-    //podemos hacer un map de varios productos depende de como lo manden
-
     items: data,
     external_reference: `${id_orden}`, // por query le paso el numero de orden
     payment_methods: {
@@ -63,7 +39,6 @@ const createLinkMP = async (req, res) => {
     },
   };
   //console.log(req.body);
-  //res.send("mercado controller");
   mercadopago.preferences
     .create(preference)
     .then((r) => {

@@ -5,9 +5,7 @@ const createOrder = async (req, res, next) => {
   try {
     const { sid } = req.query;
     const products = req.body;
-    //console.log("aca productos", products);
     const userDb = await User.findOne({ where: { sid } });
-    //const product = await Product.findAll({where:{id:{[Op.in]:products.map((e)=>e.id)}}});
     const productsDb = await Product.findAll({
       where: { id: { [Op.in]: products.map((e) => e.productId) } },
     });
