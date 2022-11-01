@@ -1,15 +1,19 @@
 const { User } = require("../../db");
 
 const isAdmin = async (req, res, next) => {
-  // verify if the user is admin
   const { sid } = req.query;
   //console.log("sid", sid);
   try {
     const userDb = await User.findOne({ where: { sid } });
     const rolesUser = await userDb.getRols();
-    //console.log(rolesUser);
-    if (rolesUser.find((r) => r.dataValues.type === "Admin")) {
+    // verify if the user is superAdmin first
+    if (rolesUser.find((r) => r.dataValues.type === "Superadmin")) {
       //console.log("Is superadmin!");
+      next();
+    }
+    //console.log(rolesUser);
+    else if (rolesUser.find((r) => r.dataValues.type === "Admin")) {
+      //console.log("Is admin!");
       next();
     } else
       res

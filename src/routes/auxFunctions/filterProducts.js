@@ -1,4 +1,4 @@
-const { Product, Category, Order, Comment, Op } = require("../../db");
+const { Product, Category, Order, Comment, Users_rols, Op } = require("../../db");
 
 const filterProducts = async function (
   page,
@@ -6,7 +6,8 @@ const filterProducts = async function (
   order = "id",
   typeOrder = "ASC",
   category,
-  name
+  name,
+  userId
 ) {
   const pageAsNumber = Number.parseInt(page);
   const quantityAsNumber = Number.parseInt(quantity);
@@ -26,7 +27,7 @@ const filterProducts = async function (
   let productsPerPage = await Product.findAndCountAll({
     limit: quantity,
     offset: (page - 1) * quantity,
-    order: [[order ? order : "id", typeOrder.toUpperCase()]],
+    order: [[order === "usersRolId" ? order : order ? order.toLowerCase() : "id", typeOrder.toUpperCase()]],
     distinct: true, // no eliminar esto, ya que la funcion findAndCountAll se descontrola
     include: category
       ? [
@@ -36,8 +37,15 @@ const filterProducts = async function (
           },
           Comment,
           Order,
+          {
+            model: Users_rols,
+            where: userId ? {userId : userId} : {}
+          }
         ]
-      : [Comment, Order, Category],
+      : [Comment, Order, Category, {
+        model: Users_rols,
+        where: userId ? {userId : userId} : {}
+      }],
     where: name ? { name: { [Op.iLike]: `%${name}%` } } : {},
   });
   return productsPerPage;

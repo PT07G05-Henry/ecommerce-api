@@ -105,17 +105,18 @@ module.exports = async () => {
     });
 
     // Usuarios - Roles
-
+    /*linea 158-159 cambiar el numero del array dependiendo de la posicion
+    de ADMIN ejemplo abajo en lineas comentadas*/
     await setRol(users[0], "SUPERADMIN"); // fede
     await setRol(users[1], "SUPERADMIN"); // chris
-    await setRol(users[2], "ADMIN"); // julio
+    await setRol(users[2], "ADMIN"); // julio linea 158-159 cambiar a [0]
     await setRol(users[3], "USER"); // franco
     await setRol(users[4], "SUPERADMIN"); // ramiro
-    await setRol(users[5], "ADMIN"); // matias
+    await setRol(users[5], "ADMIN"); // matias linea 158-159 cambiar a [1]
     await setRol(users[6], "USER"); // tobias
     await setRol(users[7], "USER"); // jorge
-    await setRol(users[8], "ADMIN"); // jorge2
-    await setRol(users[9], "ADMIN"); // fede
+    await setRol(users[8], "ADMIN"); // jorge2 linea 158-159 cambiar a [2]
+    await setRol(users[9], "ADMIN"); // fede2 linea 158-159 cambiar a [3]
 
     const us = await User.findAll();
     us.forEach(async (u) => {
@@ -137,20 +138,52 @@ module.exports = async () => {
 
     // Orders
     const ord = await Order.findAll();
+    const pay = await Payment.findAll();
+    const del = await Delivery.findAll();
+
+    const users2 = await Users_rols.findAll({ where: { rolId: 2 } });
+    //console.log(users2);
     ord.forEach(async (or) => {
+      const random = getRandom(0, users2.length - 1);
       await or.update({
-        userId: getRandom(1, User.length),
-        paymentId: getRandom(1, Payment.length),
-        deliveryId: getRandom(1, Delivery.length),
+        userId: users2[random].dataValues.userId,
+        paymentId: getRandom(1, pay.length),
+        deliveryId: getRandom(1, del.length),
       });
     });
 
     // Owner products
-    const admins = await Users_rols.findAll({ where: { rolId: 1 }, limit: 5 });
-    pr.forEach(async (p) => {
-      await p.update({
-        usersRolId: admins[getRandom(0, admins.length - 1)].dataValues.id,
+    const admins = await Users_rols.findAll({ where: { rolId: 1 } });
+    pr.forEach(async (p, i) => {
+      if (i > 2 && i < 20) {
+        await p.setUser(await admins[2].dataValues.userId);
+        await p.setUsers_rol(await admins[2].dataValues.id);
+        const arrayRatingProductId = await Comment.findAll({
+          where: { productId: p.dataValues.id },
+        });
+        if (arrayRatingProductId.length > 0) {
+          const arrayLength = arrayRatingProductId.length;
+          const sumRatings = arrayRatingProductId.reduce((a, b) => {
+            return a + b.dataValues.rating;
+          }, 0);
+          await p.update({ rating: Number.parseInt(sumRatings / arrayLength) });
+        }
+        return;
+      }
+      const random = getRandom(0, admins.length - 1);
+      await p.setUser(await admins[random].dataValues.userId);
+      await p.setUsers_rol(await admins[random].dataValues.id);
+      const arrayRatingProductId = await Comment.findAll({
+        where: { productId: p.dataValues.id },
       });
+      if (arrayRatingProductId.length > 0) {
+        const arrayLength = arrayRatingProductId.length;
+        const sumRatings = arrayRatingProductId.reduce((a, b) => {
+          return a + b.dataValues.rating;
+        }, 0);
+
+        await p.update({ rating: Number.parseInt(sumRatings / arrayLength) });
+      }
     });
 
     console.log("DB LOADED SUCCESSFULLY!");
