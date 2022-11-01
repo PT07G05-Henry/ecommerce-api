@@ -27,9 +27,8 @@ const updateUser = async (req, res) => {
         },
       }
     );
-    let userUpdate = await getDetailUser(Number.parseInt(id));
     res.status(200);
-    res.send(userUpdate);
+    res.send('User updated succesfully');
   } catch (err) {
     res.status(400);
     res.send(err.message);
