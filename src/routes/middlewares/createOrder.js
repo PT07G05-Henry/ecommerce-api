@@ -4,41 +4,28 @@ const createOrder = async (req, res, next) => {
   //falta escribir acá
   try {
     const { sid } = req.query;
-    const products = req.body;
+    const { products, total_price } = req.body;
     const userDb = await User.findOne({ where: { sid } });
     const productsDb = await Product.findAll({
-      where: { id: { [Op.in]: products.map((e) => e.productId) } },
+      where: { id: { [Op.in]: products.map((e) => e.id) } },
     });
     //create order
 
-    const totalPrice = productsDb
-      .map((p, i) => p.dataValues.price * products[i].quantity)
-      .reduce((total, item) => total + item)
-      .toFixed(2);
-
     const order = await Order.create({
       status: "Pending",
-      total_price: totalPrice,
+      total_price,
     });
     // user - order relation
     await userDb.addOrder(order);
 
     const op = await order.addProducts(productsDb);
-
+    console.log(op);
     products.forEach(
-      async (p, i) => await op[i].update({ product_quantity: p.quantity })
+      async (p, i) =>
+        await op[i].update({ product_quantity: parseInt(p.quantity) })
     );
 
-    const data = products.map((p, i) => {
-      return {
-        title: productsDb[i].dataValues.name,
-        quantity: p.quantity,
-        currency_id: "ARS",
-        unit_price: productsDb[i].dataValues.price,
-      };
-    });
-
-    req.body.mercadoData = data;
+    req.body.mercadoData = products;
     req.id_order = order.dataValues.id;
     next();
   } catch (e) {
