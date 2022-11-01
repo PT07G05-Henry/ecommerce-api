@@ -1,10 +1,11 @@
 const { Router } = require("express");
-const { crearorden, notificacionorden } = require("./controllers/mercado/mercado.js");
+const { createLinkMP, notificacionorden } = require("./controllers/mercado/mercado.js");
+const createOrder = require("./middlewares/createOrder.js");
 
 const router = Router();
 
 
-router.get("/", crearorden);
+router.post("/", createOrder, createLinkMP);
 router.get("/notificacion", notificacionorden);
 
 
