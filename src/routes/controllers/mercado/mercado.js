@@ -42,7 +42,7 @@ const createLinkMP = async (req, res) => {
   mercadopago.preferences
     .create(preference)
     .then((r) => {
-      res.json(r.body.init_point); // URL QUE FRONT DEBE PONER EN EL ONCLICK DEL BOTON CHECKOUT
+      res.json(r.body.init_point); // DEBE SER UN OBJETO CON UNA PROPIEDAD URL Y OTRA DE ORDER_ID CREADA
     })
     .catch((error) => {
       console.log(error);
@@ -58,7 +58,7 @@ const notificacionorden = (req, res) => {
   console.log("notificaciones");
   console.log(respuesta);
 
-  res.redirect("https://localhost:3000/");
+  res.redirect("https://localhost:3000/"); // DEBERIA CERRAR LA VENTANA EMERGENTE Y VOLVER AL FRONT CON UN MENSAJE PERO NO FUNCIONA
 };
 
 module.exports = { createLinkMP, notificacionorden };
