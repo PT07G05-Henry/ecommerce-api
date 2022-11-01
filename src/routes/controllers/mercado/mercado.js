@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const { ACCESS_TOKEN_TEST_MP } = process.env;
 
-const crearorden = async (req, res) => {
+const createLinkMP = async (req, res) => {// se comporta como un POST para mandar body
   // res.json(req.body); // DESGLOZAR LOS DATOS NECESARIOS PARA MANDAR A LA API DE MERCADO PAGO
   // HAY QUE CREAR UN OBJETO DATA DESDE req.body con el formato que exige MP
   /*
@@ -25,13 +25,18 @@ const crearorden = async (req, res) => {
 ]
   
   */
-
-  const dat = req.body;
-  const id_orden = req.query.id_orden; // PODEMOS MODIFICAR PARA SACARLO DEL BODY TAMBIEN
+  const dat = req.body.products;
+  const id_orden = req.id_orden; // Me lo traigo del middleware /middlewares/createOrder.js
 
   mercadopago.configure({
     access_token: ACCESS_TOKEN_TEST_MP,
   });
+
+  const protocol = req.protocol;
+  const host = req.hostname;
+  const url = req.originalUrl;
+  const port = process.env.PORT || PORT;
+  const query = req.query;
 
   let preference = {
     //podemos hacer un map de varios productos depende de como lo manden
@@ -49,12 +54,11 @@ const crearorden = async (req, res) => {
     },
 
     back_urls: {
-      success: "https://localhost:3001/mercado/notificacion",
-      failure: "https://localhost:3001/mercado/notificacion",
-      pending: "https://localhost:3001/mercado/notificacion",
+      success: `${protocol}://${host}:${port}/mercado/notificacion`,
+      failure: `${protocol}://${host}:${port}/mercado/notificacion`,
+      pending: `${protocol}://${host}:${port}/mercado/notificacion`,
     },
   };
-
   mercadopago.preferences
     .create(preference)
     .then((r) => {
@@ -62,6 +66,7 @@ const crearorden = async (req, res) => {
     })
     .catch((error) => {
       console.log(error);
+      res.json(error)
     });
 };
 
@@ -76,4 +81,4 @@ const notificacionorden = (req, res) => {
   res.send("noti");
 };
 
-module.exports = { crearorden, notificacionorden };
+module.exports = { createLinkMP, notificacionorden };
