@@ -6,6 +6,7 @@ const { getUsers } = require("./controllers/users/getUsers");
 const { getAllUsers } = require("./controllers/users/getAllUsers");
 const { auth0db } = require("./controllers/users/auth0db");
 const { updateUser } = require("./controllers/users/updateUser");
+const { changeRolUser } = require("./controllers/users/changeRolUser")
 
 // Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
@@ -24,6 +25,8 @@ router.get("/:id", getUserDetail);
 router.post("/", createUser);
 
 router.put("/", updateUser);
+
+router.put("/:id", changeRolUser);
 
 router.delete("/", deleteUser);
 
