@@ -27,13 +27,13 @@ const createOrder = async (req, res) => {
     });
     console.log(result.dataValues);
 
-    //res.status(200).json(result);
-    res.redirect(
-      url.format({
-        pathname: "/mercado",
-        body: result.dataValues,
-      })
-    );
+    res.status(200).json(result);
+    // res.redirect(
+    //   url.format({
+    //     pathname: "/mercado",
+    //     body: result.dataValues,
+    //   })
+    // );
   } catch (e) {
     console.log("createOrder error!");
     res.status(400).json({ error: e.message, message: "Cant create order" });
