@@ -26,7 +26,7 @@ router.post("/", createUser);
 
 router.put("/", updateUser);
 
-router.put("/:id", changeRolUser);
+router.put("/:id", isAuthenticated, isSuperAdmin, changeRolUser);
 
 router.delete("/", deleteUser);
 
