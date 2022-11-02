@@ -1,5 +1,9 @@
 const { User } = require("../../../db");
 
+const getDetailUser = async (id) => {
+  return await User.findByPk(id);
+};
+
 const updateUser = async (req, res) => {
   // actualizacion de datos de usuarios
   const {
@@ -9,7 +13,7 @@ const updateUser = async (req, res) => {
     birth_date,
     email,
     password,
-    profile_picture,
+    profile_picture, 
   } = req.body;
   try {
     await User.update(
@@ -27,8 +31,9 @@ const updateUser = async (req, res) => {
         },
       }
     );
+    let userUpdate = await getDetailUser(Number.parseInt(id));
     res.status(200);
-    res.send('User updated succesfully');
+    res.send(userUpdate);
   } catch (err) {
     res.status(400);
     res.send(err.message);
