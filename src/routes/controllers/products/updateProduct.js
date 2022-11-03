@@ -2,11 +2,12 @@ const { Product, Category } = require("../../../db");
 const { getProduct } = require("./getProductDetail");
 
 const updateProduct = async (req, res) => {
-  console.log(req.body);
+  
   const { id, name, price, description, stock, images, categories } = req.body;
 
   try {
     const productDb = await getProduct(id);
+   
 
     await productDb.update({
       name,
@@ -16,7 +17,7 @@ const updateProduct = async (req, res) => {
       images,
     });
 
-    if (categories.length) await productDb.setCategories(categories);
+    if (categories && categories.length) await productDb.setCategories(categories);
 
     const productUpdate = await getProduct(id);
     res.status(200);
