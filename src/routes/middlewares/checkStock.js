@@ -18,7 +18,9 @@ const checkStock = async (req, res, next) => {
         checkList.push({
           productId: productDb.dataValues.id,
           name: productDb.dataValues.name,
-          message: "Stock not available. Order less or remove",
+          message:
+            "Stock not available. Order less than " +
+            productDb.dataValues.stock,
         });
     });
     if (checkList.length) return res.json(checkList);
