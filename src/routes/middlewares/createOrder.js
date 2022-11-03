@@ -10,11 +10,23 @@ const createOrder = async (req, res, next) => {
       where: { id: { [Op.in]: products.map((e) => e.id) } },
     });
     //create order
+    var total = 0;
+
+    const productDb1 = productsDb.map((p) => p.dataValues);
+
+    products.forEach((p) => {
+      let product = productsDb.find((pDb) => pDb.dataValues.id === p.id);
+      if (product) total += product.dataValues.price * p.quantity;
+    });
+
+    total = total.toFixed(2);
 
     const order = await Order.create({
       status: "Pending",
-      total_price,
+      //total_price,
+      total_price: total,
     });
+
     // user - order relation
     await userDb.addOrder(order);
 
@@ -25,7 +37,16 @@ const createOrder = async (req, res, next) => {
         await op[i].update({ product_quantity: parseInt(p.quantity) })
     );
 
-    req.body.mercadoData = products;
+    req.body.mercadoData = products.map((p) => {
+      return {
+        id: p.id,
+        title: productsDb.find((pDb) => pDb.id === p.id).dataValues.name,
+        quantity: p.quantity,
+        unit_price: productsDb.find((pDb) => pDb.id === p.id).dataValues.price,
+        currency_id: "ARS",
+      };
+    });
+
     req.id_order = order.dataValues.id;
     next();
   } catch (e) {
@@ -36,3 +57,13 @@ const createOrder = async (req, res, next) => {
 };
 
 module.exports = createOrder;
+
+/*
+{
+      "id": 1,
+            "title": "nombre",
+            "quantity": 2,
+            "unit_price": 500,
+            "currency_id": "ARS"
+    }
+*/
