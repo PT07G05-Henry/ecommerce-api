@@ -1,5 +1,9 @@
 const { User } = require("../../../db");
 
+const getDetailUser = async (id) => {
+  return await User.findByPk(id);
+};
+
 const updateUser = async (req, res) => {
   // actualizacion de datos de usuarios
   const {
@@ -9,7 +13,7 @@ const updateUser = async (req, res) => {
     birth_date,
     email,
     password,
-    profile_picture,
+    profile_picture, 
   } = req.body;
   try {
     await User.update(
