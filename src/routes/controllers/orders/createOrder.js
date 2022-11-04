@@ -53,7 +53,7 @@ const createOrder = async (req, res) => {
     //return res.send("Close this window!");
     req.body.result = result;
     res.redirect(
-      `https://localhost:3000/payment?sid=${sid}&orderId=${order.dataValues.id}&status=${response.data.status}&total_price=${total_price}`
+      `https://localhost:3000/payment?userId=${userDb.dataValues.id}&orderId=${order.dataValues.id}&status=${response.data.status}&total_price=${total_price}`
     );
   } catch (e) {
     console.log(e);
