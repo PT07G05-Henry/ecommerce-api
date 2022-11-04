@@ -6,7 +6,8 @@ const { getUsers } = require("./controllers/users/getUsers");
 const { getAllUsers } = require("./controllers/users/getAllUsers");
 const { auth0db } = require("./controllers/users/auth0db");
 const { updateUser } = require("./controllers/users/updateUser");
-const { changeRolUser } = require("./controllers/users/changeRolUser")
+const { changeRolUser } = require("./controllers/users/changeRolUser");
+const {getIdBySID} = require("./controllers/users/getIdBySID")
 
 // Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
@@ -19,6 +20,8 @@ router.get("/", isAuthenticated, isSuperAdmin, getUsers);
 router.get("/all", isAuthenticated, isSuperAdmin, getAllUsers);
 
 router.post("/auth0", auth0db);
+
+router.get("/sid", getIdBySID);
 
 router.get("/:id", getUserDetail);
 
