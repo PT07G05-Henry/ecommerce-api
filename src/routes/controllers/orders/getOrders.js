@@ -53,9 +53,7 @@ const getOrders = async (req, res) => {
     console.log("get orders");
     const userDb = await User.findOne({ where: { sid } });
     const orders = await getOrdersDb(userDb, status, order);
-    orders.length
-      ? res.status(200).send(orders)
-      : res.status(404).send({ error: "No order for this user" });
+    res.status(200).send(orders)
   } catch (err) {
     console.log(err.message);
     res.status(400).send(err.message);
