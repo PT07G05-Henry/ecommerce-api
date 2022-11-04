@@ -1,8 +1,24 @@
+const fse = require('fs-extra')
 const { Product, Category, Users_rols, User } = require("../../../db");
+const { uploadImage } = require('../../auxFunctions/cloudinary.js')
+
+
 
 const createProduct = async function (req, res) {
   const { name, price, description, stock, images, categories } = req.body;
   const { sid } = req.query;
+  console.log("llego")
+  console.log(req.files)
+
+  if (req.files?.images) {
+    const result = await
+    uploadImage(req.files.images.tempFilePath)
+    console.log(result)// aqui guardariamos la url o secure_url para https, tener en cuenta que debemos guardar un objeto en la base
+    // con por ejemplo el secure_url y public_id en caso de querer eliminarla
+    
+  }
+  await fse.unlink(req.files.images.tempFilePath)
+  
 
   if (!name || !price || !description || !stock) {
     res.status(400);
