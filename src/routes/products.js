@@ -22,4 +22,4 @@ router.put("/", isAuthenticated, isAdmin, updateProduct);
 
 router.delete("/", isAuthenticated, isAdmin, isOwner, deleteProduct);
 
-module.exports = router;
+module.exports = router; 
