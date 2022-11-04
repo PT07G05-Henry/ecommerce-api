@@ -8,7 +8,8 @@ const paymentRoute = require("./payments");
 const productRoute = require("./products");
 const userRoute = require("./users");
 const useMercado = require("./mercadopag")
-const emailRoute = require("./email")
+const emailRoute = require("./email");
+const userCartByID = require("./cart")
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -33,10 +34,11 @@ router.use("/products", productRoute);
 
 router.use("/users", userRoute);
 
-
 router.use("/mercado", useMercado);
 
 router.use("/email", emailRoute);
+
+router.use("/cart", userCartByID);
 
 
 router.all("*", (req, res) => {
