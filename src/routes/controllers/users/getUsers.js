@@ -2,7 +2,7 @@ const { User, Order, Product, Rol, Comment } = require("../../../db");
 
 const getUsersDb = async (sid) => {
   if (sid)
-    User.findOne({
+    return User.findOne({
       where: { sid },
       attributes: ["id"],
     });
