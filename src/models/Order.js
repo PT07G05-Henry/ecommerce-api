@@ -15,7 +15,10 @@ module.exports = (sequelize) => {
     },
     status: {
       type: DataTypes.ENUM,
-      values: ["Pending", "Accepted", "Billed", "Dispatched", "Rejected"],
+      set(value) {
+        this.setDataValue("status", value.toUpperCase());
+      },
+      values: ["PENDING", "APPROVED", "AUTHORIZED", "REJECTED", "CANCELLED"],
       allowNull: false,
     },
   });

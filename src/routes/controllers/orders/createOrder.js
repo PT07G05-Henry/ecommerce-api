@@ -31,7 +31,7 @@ const createOrder = async (req, res) => {
     // //create order
     const order = await Order.create({
       //LUEGO CAMBIAR PARA VERIFICAR EL STATUS DE MP
-      status: "Accepted",
+      status: response.data.status,
       total_price,
     });
     // // user - order relation
