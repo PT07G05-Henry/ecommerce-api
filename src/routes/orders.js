@@ -11,6 +11,7 @@ const { isAuthenticated } = require("./middlewares/auth");
 const { isUser } = require("./middlewares/user");
 const { isOwner } = require("./middlewares/owner");
 const { isSuperAdmin } = require("./middlewares/superAdmin");
+const { isSuperAdminOrAdmin } = require("./middlewares/superAdminOrAdmin")
 
 const router = Router();
 
@@ -18,7 +19,7 @@ const router = Router();
 router.get("/", isAuthenticated, getOrders);
 
 // Just for superadmin
-router.get("/all", isAuthenticated, isSuperAdmin, getAllOrders);
+router.get("/all", isAuthenticated, isSuperAdminOrAdmin, getAllOrders);
 
 router.get("/:id", isAuthenticated, getOrderDetail);
 
