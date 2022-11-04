@@ -18,6 +18,7 @@ const createOrder = async (req, res) => {
         },
       }
     );
+    console.log(response.data.status);
     const products = response.data.additional_info.items;
     const total_price = Number(response.data.transaction_amount);
     const { sid } = response.data.metadata;
@@ -52,7 +53,7 @@ const createOrder = async (req, res) => {
     //return res.send("Close this window!");
     req.body.result = result;
     res.redirect(
-      `https://localhost:3000?sid=${sid}&orderId=${order.dataValues.id}`
+      `https://localhost:3000/payment?sid=${sid}&orderId=${order.dataValues.id}&status=${response.data.status}&total_price=${total_price}`
     );
   } catch (e) {
     console.log(e);
