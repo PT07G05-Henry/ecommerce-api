@@ -19,8 +19,8 @@ router.get("/", getProducts);
 
 router.post("/", createProduct);
 
-router.put("/", isAuthenticated, isAdmin, updateProduct);
+router.put("/", updateProduct);
 
-router.delete("/", isAuthenticated, isAdmin, isOwner, deleteProduct);
+router.delete("/", deleteProduct);
 
 module.exports = router;

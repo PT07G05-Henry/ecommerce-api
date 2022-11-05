@@ -44,8 +44,9 @@ module.exports = (sequelize) => {
               "images",
               JSON.stringify([
                 {
-                  image:
+                  secure_url:
                     "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
+                  public_Id: null,
                 },
               ])
             );
@@ -63,8 +64,9 @@ module.exports = (sequelize) => {
         },
         defaultValue: JSON.stringify([
           {
-            image:
+            secure_URL:
               "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
+            public_Id: null,
           },
         ]),
       },
