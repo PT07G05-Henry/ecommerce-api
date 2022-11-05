@@ -41,8 +41,6 @@ router.use("/email", emailRoute);
 
 router.use("/cart", userCartByID);
 
-router.use("/email", emailRoute);
-
 router.all("*", (req, res) => {
   res.redirect("/");
 });
