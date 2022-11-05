@@ -10,7 +10,6 @@ const userRoute = require("./users");
 const useMercado = require("./mercadopag")
 const emailRoute = require("./email");
 const userCartByID = require("./cart")
-const emailRoute = require("./email");
 
 
 // Importar todos los routers;
