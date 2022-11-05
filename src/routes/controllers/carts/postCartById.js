@@ -1,14 +1,24 @@
 const { Cart } = require("../../../db");
 
-const createCart = async (req, res) => {
-  const { data } = req.body;
+const getCartId = async (userId) => {
+  const cart = await Cart.findAll({ where: { userId: userId } });
+  return cart;
+};
+
+const postCartById = async (req, res) => {
+  const userId = req.body.userId;
+  const products = req.body.products;
   try {
-    await Cart.createBulk(req.body);
-    res.status(200).send(await Category.findAll());
+    let cart = await getCartId(userId);
+    if (cart.length === 0) {
+      const newCart = await Cart.create({items:products, userId:userId});
+      return res.send(newCart).status(200);
+    }
+
+    res.status(200).send(...cart);
   } catch (err) {
-    res.status(400);
-    res.send(err.message);
+    res.status(500).send(err.message);
   }
 };
 
-module.exports = { createCategory };
+module.exports = { postCartById };
