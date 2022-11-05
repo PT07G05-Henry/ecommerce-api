@@ -15,13 +15,13 @@ const { isAdmin } = require("./middlewares/admin");
 
 const router = Router();
 
-router.get("/:id", getCartById);
+router.get("/:userId", getCartById);
 
-//router.post("/", postCartById);
+router.post("/", postCartById);
 
-//router.put("/", putCartById);
+router.put("/", putCartById);
 
-//router.delete("/", deleteCartById);
+router.delete("/", deleteCartById);
 
 // router.all("*", async (req, res) => {
 //   res.redirect("/");
