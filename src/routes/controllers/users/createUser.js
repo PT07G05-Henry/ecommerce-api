@@ -1,4 +1,6 @@
 const { User } = require("../../../db");
+const { uploadImage } = require("../../auxFunctions/cloudinary.js");
+const fse = require("fs-extra");
 
 const createUser = async function (req, res) {
   // unicamente para registrar usuarios, no admins
@@ -17,6 +19,16 @@ const createUser = async function (req, res) {
     });
 
     await newUser.setRols(1);
+
+    if (req.files?.images) {
+      const cloudinaryImg = await uploadImage(req.files.images.tempFilePath);
+     
+      await newUser.update({
+        profile_picture: cloudinaryImg.secure_url,
+          
+        });
+      await fse.unlink(req.files.images.tempFilePath);
+    }
     res.sendStatus(201);
   } catch (error) {
     res.status(400);

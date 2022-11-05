@@ -68,12 +68,12 @@ module.exports = (sequelize) => {
           },
         },
       },
-      // profile_picture: {
-      //   type: DataTypes.TEXT,
-      //   defaultValue:
-      //     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-      // },
-      profle_picture: {
+      profile_picture: {
+        type: DataTypes.TEXT,
+        defaultValue:
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+      },
+      /* profile_picture: {
         images: {
           type: DataTypes.TEXT,
           // allowNull: false,
@@ -105,7 +105,7 @@ module.exports = (sequelize) => {
             }
           },
         },
-      },
+      }, */
       social: {
         type: DataTypes.ENUM,
         values: ["google", "apple", "microsoft", "auth0"],

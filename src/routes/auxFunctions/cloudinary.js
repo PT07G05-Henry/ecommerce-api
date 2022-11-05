@@ -18,4 +18,10 @@ const uploadImage = async function (filePath) {
   });
 };
 
-module.exports = { uploadImage };
+// elimina archivo de la nube
+
+const deleteImageCloud = async function (publicId) {
+  return await cloudinary.uploader.destroy(publicId);
+};
+
+module.exports = { uploadImage, deleteImageCloud };

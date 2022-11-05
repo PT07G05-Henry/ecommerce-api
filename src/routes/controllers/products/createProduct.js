@@ -34,8 +34,7 @@ const createProduct = async function (req, res) {
 
     if (req.files?.images) {
       const cloudinaryImg = await uploadImage(req.files.images.tempFilePath);
-      console.log("cloudinaryImg", cloudinaryImg); // aqui guardariamos la url o secure_url para https, tener en cuenta que debemos guardar un objeto en la base
-      // con por ejemplo el secure_url y public_id en caso de querer eliminarla
+
       await newProduct.update({
         images: {
           secure_url: cloudinaryImg.secure_url,
