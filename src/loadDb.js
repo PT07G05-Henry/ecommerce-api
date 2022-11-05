@@ -110,7 +110,7 @@ module.exports = async () => {
     await setRol(users[0], "USER"); // fede
     await setRol(users[1], "SUPERADMIN"); // chris
     await setRol(users[2], "ADMIN"); // julio linea 158-159 cambiar a [0]
-    await setRol(users[3], "USER"); // franco
+    await setRol(users[3], "ADMIN"); // franco
     await setRol(users[4], "SUPERADMIN"); // ramiro
     await setRol(users[5], "ADMIN"); // matias linea 158-159 cambiar a [1]
     await setRol(users[6], "USER"); // tobias

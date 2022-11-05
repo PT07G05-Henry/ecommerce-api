@@ -1,6 +1,6 @@
-const { Order, User, Product, Op } = require("../../db");
+const { User, Product, Op } = require("../../db");
 const url = require("url");
-const createOrder = async (req, res, next) => {
+const dataMercado = async (req, res, next) => {
   //falta escribir acá
   try {
     const { sid } = req.query;
@@ -9,7 +9,7 @@ const createOrder = async (req, res, next) => {
     const productsDb = await Product.findAll({
       where: { id: { [Op.in]: products.map((e) => e.id) } },
     });
-    //create order
+
     var total = 0;
 
     const productDb1 = productsDb.map((p) => p.dataValues);
@@ -21,21 +21,23 @@ const createOrder = async (req, res, next) => {
 
     total = total.toFixed(2);
 
-    const order = await Order.create({
-      status: "Pending",
-      //total_price,
-      total_price: total,
-    });
+    //create order
 
-    // user - order relation
-    await userDb.addOrder(order);
+    // const order = await Order.create({
+    //   status: "Pending",
+    //   //total_price,
+    //   total_price: total,
+    // });
 
-    const op = await order.addProducts(productsDb);
-    console.log(op);
-    products.forEach(
-      async (p, i) =>
-        await op[i].update({ product_quantity: parseInt(p.quantity) })
-    );
+    // // user - order relation
+    // await userDb.addOrder(order);
+
+    // const op = await order.addProducts(productsDb);
+    // console.log(op);
+    // products.forEach(
+    //   async (p, i) =>
+    //     await op[i].update({ product_quantity: parseInt(p.quantity) })
+    // );
 
     req.body.mercadoData = products.map((p) => {
       return {
@@ -47,7 +49,8 @@ const createOrder = async (req, res, next) => {
       };
     });
 
-    req.id_order = order.dataValues.id;
+    req.id_order = userDb.dataValues.id;
+    //return res.json({ body: req.body, id_order: req.id_order });
     next();
   } catch (e) {
     console.log("createOrder error!");
@@ -56,7 +59,7 @@ const createOrder = async (req, res, next) => {
   }
 };
 
-module.exports = createOrder;
+module.exports = dataMercado;
 
 /*
 {

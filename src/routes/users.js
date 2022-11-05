@@ -9,13 +9,14 @@ const { updateUser } = require("./controllers/users/updateUser");
 const { changeRolUser } = require("./controllers/users/changeRolUser");
 const {getIdBySID} = require("./controllers/users/getIdBySID")
 
+
 // Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
 const { isSuperAdmin } = require("./middlewares/superAdmin");
 
 const router = Router();
 
-router.get("/", isAuthenticated, isSuperAdmin, getUsers);
+router.get("/", isAuthenticated, getUsers);
 
 router.get("/all", isAuthenticated, isSuperAdmin, getAllUsers);
 

@@ -1,5 +1,5 @@
 const express = require("express");
-const { Product, Category, User } = require('../db');
+const { Product, Category, User } = require("../db");
 const categoryRoute = require("./categories");
 const commentRoute = require("./comments");
 const deliveryRoute = require("./deliveries");
@@ -10,6 +10,8 @@ const userRoute = require("./users");
 const useMercado = require("./mercadopag")
 const emailRoute = require("./email");
 const userCartByID = require("./cart")
+const emailRoute = require("./email");
+
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -40,11 +42,11 @@ router.use("/email", emailRoute);
 
 router.use("/cart", userCartByID);
 
+router.use("/email", emailRoute);
 
 router.all("*", (req, res) => {
   res.redirect("/");
 });
 router;
-
 
 module.exports = router;
