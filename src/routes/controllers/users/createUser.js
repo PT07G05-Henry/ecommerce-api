@@ -1,9 +1,10 @@
 const { User } = require("../../../db");
+const { uploadImage } = require("../../auxFunctions/cloudinary.js");
+const fse = require("fs-extra");
 
 const createUser = async function (req, res) {
-  // unicamente para registrar usuarios, no admins
-  const { first_name, last_name, birth_date, email, password } = req.body;
-  if (!first_name || !last_name || !birth_date || !email || !password) {
+  const { first_name, last_name, birth_date, email } = req.body;
+  if (!first_name || !last_name || !birth_date || !email) {
     res.status(400);
     return res.send("Missing to send mandatory data");
   }
@@ -13,12 +14,27 @@ const createUser = async function (req, res) {
       last_name,
       birth_date,
       email,
-      password,
     });
 
     await newUser.setRols(1);
-    res.sendStatus(201);
+
+    if (req.files?.images) {
+      const cloudinaryImg = await uploadImage(req.files.images.tempFilePath);
+
+      await newUser.update({
+        profile_picture: {
+          secure_url: cloudinaryImg.secure_url,
+          public_id: cloudinaryImg.public_id,
+        },
+      });
+      await fse.unlink(req.files.images.tempFilePath);
+    }
+
+    const result = await User.findByPk(newUser.dataValues.id);
+
+    res.status(201).json(result);
   } catch (error) {
+    console.log(error);
     res.status(400);
     res.send(error.message);
   }
