@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+const isImgUrl = require("../functions/isImgUrl");
 // Exportamos una función que define el modelo
 // Luego le inyectamos la conexión a sequelize.
 module.exports = (sequelize) => {
@@ -23,12 +24,12 @@ module.exports = (sequelize) => {
         set(value) {
           this.setDataValue(
             "first_name",
-            value && 
-            value
-              .toLowerCase()
-              .split(" ")
-              .map((w) => w[0].toUpperCase() + w.slice(1))
-              .join(" ")
+            value &&
+              value
+                .toLowerCase()
+                .split(" ")
+                .map((w) => w[0].toUpperCase() + w.slice(1))
+                .join(" ")
           );
         },
       },
@@ -44,11 +45,11 @@ module.exports = (sequelize) => {
           this.setDataValue(
             "last_name",
             value &&
-            value
-              .toLowerCase()
-              .split(" ")
-              .map((w) => w[0].toUpperCase() + w.slice(1))
-              .join(" ")
+              value
+                .toLowerCase()
+                .split(" ")
+                .map((w) => w[0].toUpperCase() + w.slice(1))
+                .join(" ")
           );
         },
       },
@@ -68,10 +69,40 @@ module.exports = (sequelize) => {
           },
         },
       },
+      // profile_picture: {
+      //   type: DataTypes.TEXT,
+      //   defaultValue:
+      //     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+      // },
       profile_picture: {
         type: DataTypes.TEXT,
-        defaultValue:
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+        // allowNull: false,
+        get: function () {
+          return JSON.parse(this.getDataValue("profile_picture")).secure_url;
+        },
+        set: function (val) {
+          if (!val) {
+            return this.setDataValue(
+              "profile_picture",
+              JSON.stringify({
+                secure_url:
+                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                public_Id: null,
+              })
+            );
+          }
+          return this.setDataValue("profile_picture", JSON.stringify(val));
+        },
+
+        validate: {
+          async customValidator(value) {
+            for (const img in value) {
+              if (!(await isImgUrl(img.image))) {
+                throw new Error("Image url is broken");
+              }
+            }
+          },
+        },
       },
       social: {
         type: DataTypes.ENUM,
