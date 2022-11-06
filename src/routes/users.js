@@ -11,6 +11,7 @@ const { changeRolUser } = require("./controllers/users/changeRolUser");
 // Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
 const { isSuperAdmin } = require("./middlewares/superAdmin");
+const { isUser } = require("./middlewares/user");
 const { isOwner } = require("./middlewares/owner");
 
 const router = Router();
@@ -27,8 +28,8 @@ router.post("/", createUser);
 
 router.put("/:id", isAuthenticated, isSuperAdmin, changeRolUser);
 
-router.put("/", isAuthenticated, updateUser);
+router.put("/", isAuthenticated, isUser, updateUser);
 
-router.delete("/", isAuthenticated, deleteUser);
+router.delete("/", isAuthenticated, isUser, deleteUser);
 
 module.exports = router;
