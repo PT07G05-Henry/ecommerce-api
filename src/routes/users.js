@@ -10,6 +10,7 @@ const { updateUser } = require("./controllers/users/updateUser");
 // Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
 const { isSuperAdmin } = require("./middlewares/superAdmin");
+const { isOwner } = require("./middlewares/owner");
 
 const router = Router();
 
@@ -19,12 +20,12 @@ router.get("/all", isAuthenticated, isSuperAdmin, getAllUsers);
 
 router.post("/auth0", auth0db);
 
-router.get("/:id", getUserDetail);
+router.get("/:id", isAuthenticated, getUserDetail);
 
 router.post("/", createUser);
 
-router.put("/", updateUser);
+router.put("/", isAuthenticated, updateUser);
 
-router.delete("/", deleteUser);
+router.delete("/", isAuthenticated, deleteUser);
 
 module.exports = router;
