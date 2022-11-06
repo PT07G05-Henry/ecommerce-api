@@ -6,6 +6,7 @@ const { getUsers } = require("./controllers/users/getUsers");
 const { getAllUsers } = require("./controllers/users/getAllUsers");
 const { auth0db } = require("./controllers/users/auth0db");
 const { updateUser } = require("./controllers/users/updateUser");
+const { changeRolUser } = require("./controllers/users/changeRolUser");
 
 // Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
@@ -23,6 +24,8 @@ router.post("/auth0", auth0db);
 router.get("/:id", isAuthenticated, getUserDetail);
 
 router.post("/", createUser);
+
+router.put("/:id", isAuthenticated, isSuperAdmin, changeRolUser);
 
 router.put("/", isAuthenticated, updateUser);
 

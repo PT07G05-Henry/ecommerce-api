@@ -1,6 +1,11 @@
 const { User } = require("../../../db");
+
 const fse = require("fs-extra");
 const { uploadImage } = require("../../auxFunctions/cloudinary.js");
+
+const getDetailUser = async (id) => {
+  return await User.findByPk(id);
+};
 
 const updateUser = async (req, res) => {
   // actualizacion de datos de usuarios
