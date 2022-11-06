@@ -30,16 +30,8 @@ const { MOCKAPI, APIKEY } = process.env;
 module.exports = async () => {
   console.log("LOADING DB...");
   try {
-    // async function fnUsers() {
-    //   for (const u of users) {
-    //     const user = await User.create(u);
-    //     user.update({ sid: createHash(user.dataValues.email) });
-    //   }
-    // }
-    // await fnUsers();
-
-    async function fnUsers2() {
-      for (const u of users2) {
+    async function fnUsers() {
+      for (const u of users) {
         const user = await User.create(u);
         user.update({ sid: createHash(user.dataValues.email) });
       }

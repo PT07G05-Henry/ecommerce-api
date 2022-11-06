@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+const isImgUrl = require("../functions/isImgUrl");
 // Exportamos una función que define el modelo
 // Luego le inyectamos la conexión a sequelize.
 module.exports = (sequelize) => {
@@ -68,34 +69,31 @@ module.exports = (sequelize) => {
           },
         },
       },
+      // profile_picture: {
+      //   type: DataTypes.TEXT,
+      //   defaultValue:
+      //     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+      // },
       profile_picture: {
         type: DataTypes.TEXT,
-        defaultValue:
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-      },
-      /* profile_picture: {
-        images: {
-          type: DataTypes.TEXT,
-          // allowNull: false,
-          get: function () {
-            return JSON.parse(this.getDataValue("images"));
-          },
-          set: function (val) {
-            if (val.length === 0) {
-              return this.setDataValue(
-                "images",
-                JSON.stringify([
-                  {
-                    secure_url:
-                      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-                    public_Id: null,
-                  },
-                ])
-              );
-            }
-            return this.setDataValue("images", JSON.stringify(val));
-          },
+        // allowNull: false,
+        get: function () {
+          return JSON.parse(this.getDataValue("profile_picture")).secure_url;
         },
+        set: function (val) {
+          if (!val) {
+            return this.setDataValue(
+              "profile_picture",
+              JSON.stringify({
+                secure_url:
+                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                public_Id: null,
+              })
+            );
+          }
+          return this.setDataValue("profile_picture", JSON.stringify(val));
+        },
+
         validate: {
           async customValidator(value) {
             for (const img in value) {
@@ -105,7 +103,7 @@ module.exports = (sequelize) => {
             }
           },
         },
-      }, */
+      },
       social: {
         type: DataTypes.ENUM,
         values: ["google", "apple", "microsoft", "auth0"],
