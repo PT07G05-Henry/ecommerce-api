@@ -5,22 +5,20 @@ const { createProduct } = require("./controllers/products/createProduct");
 const { updateProduct } = require("./controllers/products/updateProduct");
 const { deleteProduct } = require("./controllers/products/deleteProduct");
 
-
 //Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
 const { isAdmin } = require("./middlewares/admin");
 const { isOwner } = require("./middlewares/owner");
-
 const router = Router();
 
 router.get("/:id", getProductDetail);
 
 router.get("/", getProducts);
 
-router.post("/", createProduct);
+router.post("/", isAuthenticated, isAdmin, createProduct);
 
-router.put("/", updateProduct);
+router.put("/", isAuthenticated, updateProduct);
 
-router.delete("/", deleteProduct);
+router.delete("/", isAuthenticated, deleteProduct);
 
 module.exports = router;

@@ -1,6 +1,5 @@
 require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
-const fs = require("fs");
 require("dotenv").config();
 
 const { CLOUD_NAME, API_KEY_CLOUDINARY, API_SECRET_CLOUDINARY } = process.env;
@@ -14,7 +13,7 @@ cloudinary.config({
 
 const uploadImage = async function (filePath) {
   return await cloudinary.uploader.upload(filePath, {
-    folder: "replit",
+    folder: "ecommerce",
   });
 };
 
