@@ -1,9 +1,10 @@
-const { Product } = require("../../../db");
+const { Product, Category } = require("../../../db");
 const { getProduct } = require("./getProductDetail");
 const fse = require("fs-extra");
 const { uploadImage } = require("../../auxFunctions/cloudinary.js");
 
 const updateProduct = async (req, res) => {
+
   const { id, name, price, description, stock, categories } = req.body;
 
   try {
@@ -21,11 +22,13 @@ const updateProduct = async (req, res) => {
 
     const productDb = await getProduct(id);
 
+
     await productDb.update({
       name,
       price: price && Number.parseFloat(price).toFixed(2), // convertir a float!!!
       description,
       stock: stock && Number.parseInt(stock),
+
     });
 
     if (categories && categories.length)
@@ -37,7 +40,8 @@ const updateProduct = async (req, res) => {
       });
     }
 
-    let productUpdate = await getProduct(id);
+
+    const productUpdate = await getProduct(id);
     res.status(200);
     res.send(productUpdate);
   } catch (err) {

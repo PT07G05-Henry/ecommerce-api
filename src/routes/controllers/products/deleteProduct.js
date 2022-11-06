@@ -1,6 +1,6 @@
 const { Product } = require("../../../db");
 const deleteProduct = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.query;
   try {
     await Product.destroy({
       where: {
