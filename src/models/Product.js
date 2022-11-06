@@ -36,7 +36,9 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
         // allowNull: false,
         get: function () {
-          return JSON.parse(this.getDataValue("images"));
+          const images = JSON.parse(this.getDataValue("images"));
+          const result = images.map((img) => img.secure_url);
+          return result;
         },
         set: function (val) {
           if (val.length === 0) {
@@ -44,8 +46,9 @@ module.exports = (sequelize) => {
               "images",
               JSON.stringify([
                 {
-                  image:
+                  secure_url:
                     "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
+                  public_Id: null,
                 },
               ])
             );
@@ -63,8 +66,9 @@ module.exports = (sequelize) => {
         },
         defaultValue: JSON.stringify([
           {
-            image:
+            secure_URL:
               "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
+            public_Id: null,
           },
         ]),
       },
