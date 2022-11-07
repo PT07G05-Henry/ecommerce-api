@@ -234,7 +234,7 @@ function newBuyCart(email, asunto, mensaje, products, deliveryAddress, totalPric
                                   products.map((p) => {
                                     return `
                                         <div style="background-color:#8c7d3b; width:50%">
-                                        <img align="center" border="0" src="${p.img}" alt="${p.name}" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 290px;"
+                                        <img align="center" border="0" src="${JSON.parse(p.images)[0].secure_url}" alt="${p.name}" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 290px;"
                                         width="290" />
                                         <p style="color:black; font-weight:800">Product Name: ${p.name}</p>
                                         <p style="color:black; font-weight:800">Unitary Price: ${p.price}</p>
