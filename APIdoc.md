@@ -32,12 +32,12 @@ POST https://6evi.duckdns.org:1337/products?sid={sid}
 query: sid ---> Session ID from auth0
 
 body: {
-"name": {name}, STRING not allow null
-"price" : {price}, STRING not allow null
-"description" : {descript}, STRING not allow null
-"stock" : {stock}, STRING not allow null
-"images" : [{image}] ARRAY(img) must be an image. Allow null
-"categories": [{category}] ARRAY("STRING") not allow null
+"name": {name}, STRING required
+"price" : {price}, STRING required
+"description" : {descript}, STRING required
+"stock" : {stock}, STRING required
+"images" : [{image}] ARRAY(img) must be a file image
+"categories": [{categoryId}] ARRAY("STRING" or "INTEGER") required
 }
 
 **update product**
@@ -58,7 +58,7 @@ body: {
 "description" : {descript}, STRING
 "stock" : {stock}, STRING
 "images" : [{image}] ARRAY(img) must be an image.
-"categories": [{category}] ARRAY("STRING")
+"categories": [{categoryID}] ARRAY("STRING" or "INTEGER")
 }
 
 **delete product**
@@ -262,11 +262,12 @@ query: sid ---> Session ID from auth0
 
 Protection:
 
-FALTA PROTECCION
+- Must be authenticated
 
-GET https://6evi.duckdns.org:1337/users/{id}
+GET https://6evi.duckdns.org:1337/users/{id}?sid={sid}
 
 query: sid ---> Session ID from auth0
+
 **log in or sign up**
 
 POST https://6evi.duckdns.org:1337/users/auth0?sid={sid}
