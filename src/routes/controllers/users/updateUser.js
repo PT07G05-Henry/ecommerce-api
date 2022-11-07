@@ -39,7 +39,9 @@ const updateUser = async (req, res) => {
     const result = await User.findByPk(Number.parseInt(id));
     res.set("Content-Type", "multipart/form-data");
     res.status(200);
-    res.send(result);
+    res.send({
+      ...result.dataValues,
+      profile_picture: JSON.parse(result.dataValues.profile_picture).secure_url})
   } catch (err) {
     res.status(400);
     res.send(err.message);
