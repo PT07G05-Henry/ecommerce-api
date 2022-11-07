@@ -17,8 +17,9 @@ module.exports = (sequelize) => {
         },
         defaultValue: JSON.stringify([]),
       },
-    userId:{
-        type: DataTypes.INTEGER
+      userId:{
+        type: DataTypes.INTEGER,
+        unique:true
     },
   },
   {
