@@ -71,7 +71,6 @@ const sendEmail = async (req, res) => {
         return res.status(404).send("Error sending Email");
       }
       return res.redirect(req.query.responseMP);
-      //return res.status(200).send({ status: "Sended", info });
     });
   });
 };
