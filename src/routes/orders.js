@@ -5,13 +5,13 @@ const { getOrderDetail } = require("./controllers/orders/getOrderDetail");
 const { getOrders } = require("./controllers/orders/getOrders");
 const { updateOrder } = require("./controllers/orders/updateOrder");
 const { getAllOrders } = require("./controllers/orders/getAllOrders");
-
+const { sendEmail } = require("./controllers/email/sendEmail");
 //Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
 const { isUser } = require("./middlewares/user");
 const { isOwner } = require("./middlewares/owner");
 const { isSuperAdmin } = require("./middlewares/superAdmin");
-const { isSuperAdminOrAdmin } = require("./middlewares/superAdminOrAdmin")
+const { isSuperAdminOrAdmin } = require("./middlewares/superAdminOrAdmin");
 const dataMercado = require("./middlewares/dataMercado.js");
 const checkStock = require("./middlewares/checkStock.js");
 const { createLinkMP } = require("./middlewares/mercado.js");
@@ -34,7 +34,7 @@ router.post(
   createLinkMP
 );
 
-router.get("/mercadoResponse", createOrder);
+router.get("/mercadoResponse", createOrder, sendEmail);
 
 // For admin or user dashboard
 router.get("/", isAuthenticated, getOrders);
