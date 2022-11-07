@@ -34,7 +34,6 @@ const createOrder = async (req, res, next) => {
       total_price,
     });
     // // user - order relation
-    console.log("response.data.metadata", response.data.metadata);
     await userDb.addOrder(order);
 
     const op = await order.addProducts(productsDb);
@@ -48,13 +47,8 @@ const createOrder = async (req, res, next) => {
       where: { id: order.dataValues.id },
       include: [User, Product],
     });
-    // console.log(result.dataValues);
-
-    //return res.send("Close this window!");
 
     req.query.responseMP = `https://localhost:3000/payment?userId=${userDb.dataValues.id}&orderId=${order.dataValues.id}&status=${response.data.status}&total_price=${total_price}`;
-    // res.redirect("/email/send");
-    // res.redirect(`https://localhost:3000/payment?userId=${userDb.dataValues.id}&orderId=${order.dataValues.id}&status=${response.data.status}&total_price=${total_price}`);
     const infoMail = {
       subject: `${payment_id} order`,
       type: "newBuyCart",
@@ -65,8 +59,6 @@ const createOrder = async (req, res, next) => {
       products: result.dataValues.products.map((p) => p.dataValues),
     };
     req.body = { ...req.body, ...infoMail };
-    console.log("req.bodyproducts", req.body.products);
-    //console.log("infoMail", infoMail);
     next();
   } catch (e) {
     console.log(e);
