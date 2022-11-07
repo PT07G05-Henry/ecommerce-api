@@ -37,7 +37,7 @@ module.exports = (sequelize) => {
         // allowNull: false,
         get: function () {
           const images = JSON.parse(this.getDataValue("images"));
-          const result = images.map((img) => img.secure_url);
+          const result = images.map((img) => {return {image:img.secure_url}});
           return result;
         },
         set: function (val) {
@@ -47,7 +47,7 @@ module.exports = (sequelize) => {
               JSON.stringify([
                 {
                   secure_url:
-                    "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
+                    "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
                   public_Id: null,
                 },
               ])
@@ -67,7 +67,7 @@ module.exports = (sequelize) => {
         defaultValue: JSON.stringify([
           {
             secure_URL:
-              "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
+              "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
             public_Id: null,
           },
         ]),

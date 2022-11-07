@@ -15,6 +15,7 @@ const sendEmail = async (req, res) => {
     directionAddress,
     totalPrice,
   } = req.body; //type es para saber que type de correo enviar
+
   if (!email || !subject || !message)
     return res.status(404).send("Data missing (Email, Subject Or Message)");
   nodemailer.createTestAccount((err, account) => {
@@ -69,7 +70,7 @@ const sendEmail = async (req, res) => {
       if (err) {
         return res.status(404).send("Error sending Email");
       }
-      return res.status(200).send({status:"Sended", info});
+      return res.redirect(req.query.responseMP);
     });
   });
 };
