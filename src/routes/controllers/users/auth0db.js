@@ -3,7 +3,6 @@ const { User, Rol } = require("../../../db");
 const auth0db = async (req, res) => {
   const { first_name, last_name, picture_profile, email, sid, social } =
     req.body;
-  console.log(req.body);
   try {
     const userDb = await User.findOne({
       where: { email },
@@ -18,8 +17,9 @@ const auth0db = async (req, res) => {
           email: userDb.dataValues.email,
           sid,
           id: userDb.dataValues.id,
-          profile_picture: userDb.dataValues.profile_picture,
-          birth_date: userDb.dataValues.birth_date
+          profile_picture: JSON.parse(userDb.dataValues.profile_picture)
+            .secure_url,
+          birth_date: userDb.dataValues.birth_date,
         },
         roles: userDb.dataValues.rols.map((r) => r.type),
       });
@@ -28,7 +28,7 @@ const auth0db = async (req, res) => {
         first_name,
         last_name,
         email,
-        picture_profile,
+        profile_picture: { secure_url: picture_profile, public_id: null },
         social,
         sid,
       });
@@ -38,7 +38,11 @@ const auth0db = async (req, res) => {
         include: [Rol],
       });
       return res.status(200).json({
-        newUser: newUser.dataValues,
+        newUser: {
+          ...newUser.dataValues,
+          profile_picture: JSON.parse(newUser.dataValues.profile_picture)
+            .secure_url,
+        },
         roles: newUserWithRole.dataValues.rols.map((r) => r.type),
       });
     }
