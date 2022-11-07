@@ -78,7 +78,7 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
         // allowNull: false,
         get: function () {
-          return JSON.parse(this.getDataValue("profile_picture")).secure_url;
+          return JSON.parse(this.getDataValue("profile_picture"));
         },
         set: function (val) {
           if (!val) {
