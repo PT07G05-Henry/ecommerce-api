@@ -7,7 +7,6 @@ const orderRoute = require("./orders");
 const paymentRoute = require("./payments");
 const productRoute = require("./products");
 const userRoute = require("./users");
-const useMercado = require("./mercadopag")
 const emailRoute = require("./email");
 const userCartByID = require("./cart")
 
@@ -34,8 +33,6 @@ router.use("/payments", paymentRoute);
 router.use("/products", productRoute);
 
 router.use("/users", userRoute);
-
-router.use("/mercado", useMercado);
 
 router.use("/email", emailRoute);
 
