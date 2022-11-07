@@ -67,7 +67,7 @@ module.exports = (sequelize) => {
         defaultValue: JSON.stringify([
           {
             secure_URL:
-              "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930",
+              "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
             public_Id: null,
           },
         ]),
