@@ -7,8 +7,7 @@ const { getAllUsers } = require("./controllers/users/getAllUsers");
 const { auth0db } = require("./controllers/users/auth0db");
 const { updateUser } = require("./controllers/users/updateUser");
 const { changeRolUser } = require("./controllers/users/changeRolUser");
-const {getIdBySID} = require("./controllers/users/getIdBySID")
-
+const { getIdBySID } = require("./controllers/users/getIdBySID");
 
 // Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
@@ -32,7 +31,7 @@ router.post("/", createUser);
 
 router.put("/:id", isAuthenticated, isSuperAdmin, changeRolUser);
 
-router.put("/", isAuthenticated, isUser, updateUser);
+router.put("/", isAuthenticated, updateUser);
 
 router.delete("/", isAuthenticated, isUser, deleteUser);
 

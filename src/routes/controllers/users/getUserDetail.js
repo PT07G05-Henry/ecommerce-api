@@ -1,7 +1,11 @@
 const { User } = require("../../../db");
 
 const getUserDb = async (id) => {
-  return await User.findByPk(id);
+  const userDb = await User.findByPk(id);
+  return {
+    ...userDb.dataValues,
+    profile_picture: JSON.parse(userDb.dataValues.profile_picture).secure_url,
+  };
 };
 
 const getUserDetail = async (req, res) => {
@@ -10,6 +14,6 @@ const getUserDetail = async (req, res) => {
   user
     ? res.status(200).send(user)
     : res.status(404).send({ error: "User Not Found" });
-};   
+};
 
 module.exports = { getUserDetail };
