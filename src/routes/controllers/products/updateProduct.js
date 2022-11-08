@@ -37,8 +37,9 @@ const updateProduct = async (req, res) => {
       stock: stock && Number.parseInt(stock),
     });
 
-    if (categories && categories.length)
-      await productDb.setCategories(categories);
+    const cat = [categories.split(",")].map((c) => Number.parseInt(c));
+
+    if (cat && cat.length) await productDb.setCategories(cat);
 
     if (req.files?.images) {
       await productDb.update({
@@ -47,6 +48,9 @@ const updateProduct = async (req, res) => {
     }
 
     let productUpdate = await getProduct(id);
+
+    res.set("Content-Type", "multipart/form-data");
+
     res.status(200);
     res.json({
       ...productUpdate.dataValues,
