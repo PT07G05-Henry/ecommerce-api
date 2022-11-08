@@ -107,7 +107,7 @@ module.exports = async () => {
     // Usuarios - Roles
     /*linea 158-159 cambiar el numero del array dependiendo de la posicion
     de ADMIN ejemplo abajo en lineas comentadas*/
-    await setRol(users[0], "USER"); // fede
+    await setRol(users[0], "SUPERADMIN"); // fede
     await setRol(users[1], "SUPERADMIN"); // chris
     await setRol(users[2], "ADMIN"); // julio linea 158-159 cambiar a [0]
     await setRol(users[3], "ADMIN"); // franco
@@ -116,7 +116,6 @@ module.exports = async () => {
     await setRol(users[6], "USER"); // tobias
     await setRol(users[7], "USER"); // jorge
     await setRol(users[8], "ADMIN"); // jorge2 linea 158-159 cambiar a [2]
-    await setRol(users[9], "ADMIN"); // fede2 linea 158-159 cambiar a [3]
 
     const us = await User.findAll();
     us.forEach(async (u) => {
