@@ -37,6 +37,7 @@ const auth0db = async (req, res) => {
         where: { email: newUser.dataValues.email },
         include: [Rol],
       });
+
       return res.status(200).json({
         newUser: {
           ...newUser.dataValues,
@@ -47,7 +48,7 @@ const auth0db = async (req, res) => {
       });
     }
   } catch (e) {
-    console.log(e.message);
+    console.log(e);
     return res.status(400).send(e);
   }
 };
