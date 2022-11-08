@@ -39,6 +39,8 @@ router.get("/mercadoResponse", createOrder, sendEmail);
 // For admin or user dashboard
 router.get("/", isAuthenticated, getOrders);
 
+router.get("/:id", isAuthenticated, getOrderDetail);
+
 router.put("/", updateOrder);
 
 router.delete("/", deleteOrder);

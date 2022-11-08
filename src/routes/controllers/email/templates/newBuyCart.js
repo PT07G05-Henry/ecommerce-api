@@ -238,8 +238,8 @@ function newBuyCart(email, asunto, mensaje, products, deliveryAddress, totalPric
                                         width="290" />
                                         <p style="color:black; font-weight:800">Product Name: ${p.name}</p>
                                         <p style="color:black; font-weight:800">Unitary Price: ${p.price}</p>
-                                        <p style="color:black; font-weight:800">Total of Units: ${p.units}</p>
-                                        <p style="color:black; font-weight:800">Total Price per Unit: ${Number(p.units) * Number(p.price)}</p>
+                                        <p style="color:black; font-weight:800">Total of Units: ${p.orders_products.dataValues.product_quantity}</p>
+                                        <p style="color:black; font-weight:800">Total Price per Unit: ${Number(p.orders_products.dataValues.product_quantity) * Number(p.price)}</p>
                                         </div>
                                       `;
                                   })
