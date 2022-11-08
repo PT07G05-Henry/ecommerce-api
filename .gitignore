@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# Images uploaded from client
+/uploads
+
 # production
 # Disabled for deploy
 #/build 

@@ -119,7 +119,7 @@ module.exports = async () => {
 
     const us = await User.findAll();
     us.forEach(async (u) => {
-      if (u.id > 10) await u.addRol(await Rol.findByPk(getRandom(1, 2)));
+      if (u.id > 9) await u.addRol(await Rol.findByPk(getRandom(1, 2)));
     });
 
     //Comentarios
