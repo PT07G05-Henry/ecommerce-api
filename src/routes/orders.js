@@ -41,7 +41,7 @@ router.get("/", isAuthenticated, getOrders);
 
 router.get("/:id", isAuthenticated, getOrderDetail);
 
-router.put("/", updateOrder);
+router.put("/", isAuthenticated, isSuperAdminOrAdmin, updateOrder);
 
 router.delete("/", deleteOrder);
 
