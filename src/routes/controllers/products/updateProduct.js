@@ -9,13 +9,22 @@ const updateProduct = async (req, res) => {
   try {
     const newImages = [];
     if (req.files?.images) {
-      for (const img of req.files.images) {
-        const cloudinaryImg = await uploadImage(img.tempFilePath);
+      if (Array.isArray(req.files.images))
+        for (const img of req.files.images) {
+          const cloudinaryImg = await uploadImage(img.tempFilePath);
+          newImages.push({
+            secure_url: cloudinaryImg.secure_url,
+            public_id: cloudinaryImg.public_id,
+          });
+          await fse.unlink(img.tempFilePath);
+        }
+      else {
+        const cloudinaryImg = await uploadImage(req.files.images.tempFilePath);
         newImages.push({
           secure_url: cloudinaryImg.secure_url,
           public_id: cloudinaryImg.public_id,
         });
-        await fse.unlink(img.tempFilePath);
+        await fse.unlink(req.files.images.tempFilePath);
       }
     }
 
