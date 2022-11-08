@@ -16,8 +16,8 @@ const { isUser } = require("./middlewares/user");
 const { isOwner } = require("./middlewares/owner");
 
 const router = Router();
-
-router.get("/", isAuthenticated, isSuperAdmin, getUsers);
+// ruta no usada
+//router.get("/", isAuthenticated, isSuperAdmin, getUsers);
 
 router.get("/all", isAuthenticated, isSuperAdmin, getAllUsers);
 
