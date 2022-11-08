@@ -39,7 +39,7 @@ const auth0db = async (req, res) => {
       });
 
       return res.status(200).json({
-        newUser: {
+        userDb: {
           ...newUser.dataValues,
           profile_picture: JSON.parse(newUser.dataValues.profile_picture)
             .secure_url,
