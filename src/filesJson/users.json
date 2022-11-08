@@ -100,6 +100,7 @@
     "last_name": "ADMIN",
     "email": "interlandizoireff@gmail.com",
     "profile_picture": {
+      "secure_url": "http://dummyimage.com/201x100.png/ff4444/ffffff",
       "public_id": null
     },
     "social": "google"
