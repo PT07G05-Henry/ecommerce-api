@@ -3,10 +3,25 @@ require("dotenv").config();
 const { PORT } = process.env;
 
 const getAllUsers = async (req, res) => {
-  let { name, page = 1, quantity = 10, typeOrder, orderBy, rol , sid} = req.query;
+  let {
+    name,
+    page = 1,
+    quantity = 10,
+    typeOrder,
+    orderBy,
+    rol,
+    sid,
+  } = req.query;
 
   try {
-    let users = await filterUsers(page, quantity, orderBy, typeOrder, name, rol);
+    let users = await filterUsers(
+      page,
+      quantity,
+      orderBy,
+      typeOrder,
+      name,
+      rol
+    );
     if (users.length === 0)
       return res.send("There are no users loaded in the DB");
     const protocol = req.protocol;
@@ -51,10 +66,16 @@ const getAllUsers = async (req, res) => {
         orderBy,
         typeOrder,
         name,
-        sid
+        sid,
       },
-      results: users.rows,
+      results: users.rows.map((u) => {
+        return {
+          ...u.dataValues,
+          profile_picture: JSON.parse(u.dataValues.profile_picture).secure_url,
+        };
+      }),
     };
+    console.log(obj.results);
     res.status(200).send(obj);
   } catch (err) {
     console.log(err);
