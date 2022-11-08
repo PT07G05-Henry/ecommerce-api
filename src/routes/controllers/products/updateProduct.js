@@ -39,7 +39,12 @@ const updateProduct = async (req, res) => {
 
     let productUpdate = await getProduct(id);
     res.status(200);
-    res.send(productUpdate);
+    res.json({
+      ...productUpdate.dataValues,
+      images: [...JSON.parse(productUpdate.dataValues.images)].map((img) => {
+        return { image: img.secure_url };
+      }),
+    });
   } catch (err) {
     console.log(err);
     res.status(400);

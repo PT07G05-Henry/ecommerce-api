@@ -18,13 +18,22 @@ const createProduct = async function (req, res) {
 
     const newImages = [];
     if (req.files?.images) {
-      for (const img of req.files.images) {
-        const cloudinaryImg = await uploadImage(img.tempFilePath);
+      if (Array.isArray(req.files.images))
+        for (const img of req.files.images) {
+          const cloudinaryImg = await uploadImage(img.tempFilePath);
+          newImages.push({
+            secure_url: cloudinaryImg.secure_url,
+            public_id: cloudinaryImg.public_id,
+          });
+          await fse.unlink(img.tempFilePath);
+        }
+      else {
+        const cloudinaryImg = await uploadImage(req.files.images.tempFilePath);
         newImages.push({
           secure_url: cloudinaryImg.secure_url,
           public_id: cloudinaryImg.public_id,
         });
-        await fse.unlink(img.tempFilePath);
+        await fse.unlink(req.files.images.tempFilePath);
       }
     }
 
@@ -46,7 +55,13 @@ const createProduct = async function (req, res) {
       where: { id: newProduct.dataValues.id },
       include: [Category, Users_rols],
     });
-    res.status(200).json(result);
+
+    res.status(200).json({
+      ...result.dataValues,
+      images: [...JSON.parse(result.dataValues.images)].map((img) => {
+        return { image: img.secure_url };
+      }),
+    });
   } catch (err) {
     console.log(err);
     res.status(400);
