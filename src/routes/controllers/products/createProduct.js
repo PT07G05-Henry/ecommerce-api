@@ -36,9 +36,9 @@ const createProduct = async function (req, res) {
       images: newImages,
     });
 
-    categories.forEach((c) => Number.parseInt(c));
+    const cat = [categories.split(",")].map((c) => Number.parseInt(c));
 
-    await newProduct.setCategories(categories);
+    await newProduct.setCategories(cat);
 
     await newProduct.update({ usersRolId: user_rol.dataValues.id });
 
@@ -46,6 +46,7 @@ const createProduct = async function (req, res) {
       where: { id: newProduct.dataValues.id },
       include: [Category, Users_rols],
     });
+    res.set("Content-Type", "multipart/form-data");
     res.status(200).json(result);
   } catch (err) {
     console.log(err);

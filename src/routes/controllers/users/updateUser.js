@@ -21,7 +21,7 @@ const updateUser = async (req, res) => {
         public_id: cloudinaryImg.public_id
       };
       await fse.unlink(req.files.profile_picture.tempFilePath);
-    }
+    } 
 
     await User.update(
       {
