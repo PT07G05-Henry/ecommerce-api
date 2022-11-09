@@ -107,19 +107,19 @@ module.exports = async () => {
     // Usuarios - Roles
     /*linea 158-159 cambiar el numero del array dependiendo de la posicion
     de ADMIN ejemplo abajo en lineas comentadas*/
-    await setRol(users[0], "SUPERADMIN"); // fede
-    await setRol(users[1], "SUPERADMIN"); // chris
-    await setRol(users[2], "ADMIN"); // julio linea 158-159 cambiar a [0]
-    await setRol(users[3], "ADMIN"); // franco
-    await setRol(users[4], "SUPERADMIN"); // ramiro
-    await setRol(users[5], "ADMIN"); // matias linea 158-159 cambiar a [1]
-    await setRol(users[6], "USER"); // tobias
+    await setRol(users[0], "SUPERADMIN"); // techmerch
+    await setRol(users[1], "ADMIN"); // fede
+    await setRol(users[2], "ADMIN"); // chris
+    await setRol(users[3], "ADMIN"); // julio linea 158-159 cambiar a [0]
+    await setRol(users[4], "ADMIN"); // franco
+    await setRol(users[5], "SUPERADMIN"); // ramiro
+    await setRol(users[6], "ADMIN"); // matias linea 158-159 cambiar a [1]
     await setRol(users[7], "USER"); // jorge
     await setRol(users[8], "ADMIN"); // jorge2 linea 158-159 cambiar a [2]
 
     const us = await User.findAll();
     us.forEach(async (u) => {
-      if (u.id > 10) await u.addRol(await Rol.findByPk(getRandom(1, 2)));
+      if (u.id > 9) await u.addRol(await Rol.findByPk(getRandom(1, 2)));
     });
 
     //Comentarios
