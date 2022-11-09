@@ -53,7 +53,7 @@ const createOrder = async (req, res, next) => {
       subject: `${payment_id} order`,
       type: "newBuyCart",
       message: `${result.user.dataValues.first_name} this are your products`,
-      directionAddress: `Home`,
+      directionAddress: `Direction Address: ${userDb.dataValues.direction} - Between street 1: ${userDb.dataValues.street1} & street 2: ${userDb.dataValues.street2} - City: ${userDb.dataValues.city} - Postal Code: ${userDb.dataValues.postalCode}`,
       email: `${result.user.dataValues.email}`,
       totalPrice: `${result.dataValues.total_price}`,
       products: result.dataValues.products.map((p) => p.dataValues),
