@@ -1,5 +1,20 @@
 [
   {
+    "first_name": "TECNOMERCH",
+    "last_name": "SUPERADMIN",
+    "email": "techmerchpt@gmail.com",
+    "profile_picture": {
+      "secure_url": "https://lh3.googleusercontent.com/a/ALm5wu3th0DKH2UFEAX6hT2f-s31858F34k9AfUC3iJL=s288-p-rw-no",
+      "public_id": null
+    },
+    "social": "google",
+    "direction": "560 Florida",
+    "street1": "Las Piedras",
+    "street2": "General Paz",
+    "city": "Ciudad de Buenos Aires",
+    "postalCode": "2384"
+  },
+  {
     "first_name": "FEDERICO",
     "last_name": "SUPERADMIN",
     "email": "ing.finterlandi@gmail.com",
@@ -119,20 +134,6 @@
       "public_id": null
     },
     "social": "google",
-    "direction": "34 Mayfield Crossing",
-    "street1": "Marquette",
-    "street2": "Crest Line",
-    "city": "Vasilyevskiy Mokh",
-    "postalCode": "172115"
-  },
-  {
-    "first_name": "Tobe",
-    "last_name": "Gogie",
-    "email": "tgogie0@paginegialle.it",
-    "social": "auth0",
-    "profile_picture": {
-      "secure_url": "http://dummyimage.com/225x100.png/5fa2dd/ffffff"
-    },
     "direction": "34 Mayfield Crossing",
     "street1": "Marquette",
     "street2": "Crest Line",
