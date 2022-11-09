@@ -21,6 +21,7 @@ const updateUser = async (req, res) => {
     postalCode,
   } = req.body;
   try {
+    const userDb = await getDetailUser(id);
     let newProfile_picture = {};
     if (req.files?.profile_picture) {
       const cloudinaryImg = await uploadImage(
@@ -31,9 +32,9 @@ const updateUser = async (req, res) => {
         public_id: cloudinaryImg.public_id,
       };
       await fse.unlink(req.files.profile_picture.tempFilePath);
-    }
+    } else newProfile_picture = JSON.parse(userDb.dataValues.profile_picture);
 
-    await User.update(
+    await userDb.update(
       {
         first_name,
         last_name,
@@ -59,6 +60,7 @@ const updateUser = async (req, res) => {
       profile_picture: JSON.parse(result.dataValues.profile_picture).secure_url,
     });
   } catch (err) {
+    console.log(err);
     res.status(400);
     res.send(err.message);
   }
