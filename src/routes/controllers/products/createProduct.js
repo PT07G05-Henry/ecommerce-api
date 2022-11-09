@@ -46,8 +46,8 @@ const createProduct = async function (req, res) {
     });
 
     //categories.forEach((c) => Number.parseInt(c));
-    const cat = [categories.split(",")].map((c) => Number.parseInt(c));
-    await newProduct.setCategories(categories);
+    const cat = categories.split(",").map((c) => Number.parseInt(c));
+    await newProduct.setCategories(cat);
 
     await newProduct.update({ usersRolId: user_rol.dataValues.id });
 

@@ -37,7 +37,7 @@ const updateProduct = async (req, res) => {
       stock: stock && Number.parseInt(stock),
     });
 
-    const cat = [categories.split(",")].map((c) => Number.parseInt(c));
+    const cat = categories.split(",").map((c) => Number.parseInt(c));
 
     if (cat && cat.length) await productDb.setCategories(cat);
 
