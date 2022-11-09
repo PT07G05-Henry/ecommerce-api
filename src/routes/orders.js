@@ -10,7 +10,6 @@ const { sendEmail } = require("./controllers/email/sendEmail");
 const { isAuthenticated } = require("./middlewares/auth");
 const { isUser } = require("./middlewares/user");
 const { isOwner } = require("./middlewares/owner");
-const { isSuperAdmin } = require("./middlewares/superAdmin");
 const { isAdmin } = require("./middlewares/admin");
 const dataMercado = require("./middlewares/dataMercado.js");
 const checkStock = require("./middlewares/checkStock.js");
