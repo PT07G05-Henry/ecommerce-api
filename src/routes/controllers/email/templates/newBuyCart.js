@@ -214,7 +214,6 @@ function newBuyCart(email, asunto, mensaje, products, deliveryAddress, totalPric
                               <div style="line-height: 140%; text-align: center; word-wrap: break-word;">
                                 <p style="font-size: 14px; line-height: 140%;"><strong>YOU MAKE A NEW PURCHASE</strong></p>
                                 <p style="font-size: 14px; line-height: 140%;"><strong>TOTAL PRICE: ${totalPrice}</strong></p>
-                                <p style="font-size: 14px; line-height: 140%;"><strong>DIRECTION ADDRESS</strong></p>
                                 <p style="font-size: 14px; line-height: 140%;"><strong>${deliveryAddress}</strong></p>
                               </div>
 

@@ -22,7 +22,7 @@ const getCommentDetail = async (req, res) => {
   let { relation } = req.query;
   console.log(relation, id);
   try {
-    comments = await getCommentsById(id, relation);
+    const comments = await getCommentsById(id, relation);
     if (comments.length === 0)
       return res.send("There are no matchs in the DB").status(404);
     res.status(200).send(comments);
