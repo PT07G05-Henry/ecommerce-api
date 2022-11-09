@@ -1,4 +1,11 @@
-const { Product, Category, Order, Comment, Users_rols, Op } = require("../../db");
+const {
+  Product,
+  Category,
+  Order,
+  Comment,
+  Users_rols,
+  Op,
+} = require("../../db");
 
 const filterProducts = async function (
   page,
@@ -27,7 +34,12 @@ const filterProducts = async function (
   let productsPerPage = await Product.findAndCountAll({
     limit: quantity,
     offset: (page - 1) * quantity,
-    order: [[order === "usersRolId" ? order : order ? order.toLowerCase() : "id", typeOrder.toUpperCase()]],
+    order: [
+      [
+        order === "usersRolId" ? order : order ? order.toLowerCase() : "id",
+        typeOrder.toUpperCase(),
+      ],
+    ],
     distinct: true, // no eliminar esto, ya que la funcion findAndCountAll se descontrola
     include: category
       ? [
@@ -39,15 +51,30 @@ const filterProducts = async function (
           Order,
           {
             model: Users_rols,
-            where: userId ? {userId : userId} : {}
-          }
+            where: userId ? { userId: userId } : {},
+          },
         ]
-      : [Comment, Order, Category, {
-        model: Users_rols,
-        where: userId ? {userId : userId} : {}
-      }],
+      : [
+          Comment,
+          Order,
+          Category,
+          {
+            model: Users_rols,
+            where: userId ? { userId: userId } : {},
+          },
+        ],
     where: name ? { name: { [Op.iLike]: `%${name}%` } } : {},
   });
+
+  productsPerPage.rows = productsPerPage.rows.map((p) => {
+    return {
+      ...p.dataValues,
+      images: [...JSON.parse(p.dataValues.images)].map((img) => {
+        return { image: img.secure_url };
+      }),
+    };
+  });
+
   return productsPerPage;
 };
 

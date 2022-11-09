@@ -36,9 +36,7 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
         // allowNull: false,
         get: function () {
-          const images = JSON.parse(this.getDataValue("images"));
-          const result = images.map((img) => {return {image:img.secure_url}});
-          return result;
+          return JSON.parse(this.getDataValue("images"));
         },
         set: function (val) {
           if (val.length === 0) {

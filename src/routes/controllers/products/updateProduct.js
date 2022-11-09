@@ -9,13 +9,22 @@ const updateProduct = async (req, res) => {
   try {
     const newImages = [];
     if (req.files?.images) {
-      for (const img of req.files.images) {
-        const cloudinaryImg = await uploadImage(img.tempFilePath);
+      if (Array.isArray(req.files.images))
+        for (const img of req.files.images) {
+          const cloudinaryImg = await uploadImage(img.tempFilePath);
+          newImages.push({
+            secure_url: cloudinaryImg.secure_url,
+            public_id: cloudinaryImg.public_id,
+          });
+          await fse.unlink(img.tempFilePath);
+        }
+      else {
+        const cloudinaryImg = await uploadImage(req.files.images.tempFilePath);
         newImages.push({
           secure_url: cloudinaryImg.secure_url,
           public_id: cloudinaryImg.public_id,
         });
-        await fse.unlink(img.tempFilePath);
+        await fse.unlink(req.files.images.tempFilePath);
       }
     }
 
@@ -28,8 +37,9 @@ const updateProduct = async (req, res) => {
       stock: stock && Number.parseInt(stock),
     });
 
-    if (categories && categories.length)
-      await productDb.setCategories(categories);
+    const cat = [categories.split(",")].map((c) => Number.parseInt(c));
+
+    if (cat && cat.length) await productDb.setCategories(cat);
 
     if (req.files?.images) {
       await productDb.update({
@@ -38,8 +48,16 @@ const updateProduct = async (req, res) => {
     }
 
     let productUpdate = await getProduct(id);
+
+    res.set("Content-Type", "multipart/form-data");
+
     res.status(200);
-    res.send(productUpdate);
+    res.json({
+      ...productUpdate.dataValues,
+      images: [...JSON.parse(productUpdate.dataValues.images)].map((img) => {
+        return { image: img.secure_url };
+      }),
+    });
   } catch (err) {
     console.log(err);
     res.status(400);
