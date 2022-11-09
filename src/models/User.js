@@ -111,6 +111,21 @@ module.exports = (sequelize) => {
       sid: {
         type: DataTypes.STRING(32),
       },
+      direction:{
+        type: DataTypes.STRING()
+      },
+      street1:{
+        type: DataTypes.STRING()
+      },
+      street2:{
+        type: DataTypes.STRING()
+      },
+      city:{
+        type: DataTypes.STRING()
+      },
+      postalCode:{
+        type: DataTypes.STRING()
+      },
     },
     {
       timestamps: false,
