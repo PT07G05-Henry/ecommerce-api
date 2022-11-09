@@ -11,7 +11,7 @@ const { isAuthenticated } = require("./middlewares/auth");
 const { isUser } = require("./middlewares/user");
 const { isOwner } = require("./middlewares/owner");
 const { isSuperAdmin } = require("./middlewares/superAdmin");
-const { isSuperAdminOrAdmin } = require("./middlewares/superAdminOrAdmin");
+const { isAdmin } = require("./middlewares/admin");
 const dataMercado = require("./middlewares/dataMercado.js");
 const checkStock = require("./middlewares/checkStock.js");
 const { createLinkMP } = require("./middlewares/mercado.js");
@@ -19,7 +19,7 @@ const { createLinkMP } = require("./middlewares/mercado.js");
 const router = Router();
 
 // Just for superadmin
-router.get("/all", isAuthenticated, isSuperAdminOrAdmin, getAllOrders);
+router.get("/all", isAuthenticated, isAdmin, getAllOrders);
 
 //router.get("/:id", isAuthenticated, getOrderDetail);
 
@@ -41,7 +41,7 @@ router.get("/", isAuthenticated, getOrders);
 
 router.get("/:id", isAuthenticated, getOrderDetail);
 
-router.put("/", isAuthenticated, isSuperAdminOrAdmin, updateOrder);
+router.put("/", isAuthenticated, isAdmin, updateOrder);
 
 router.delete("/", deleteOrder);
 
