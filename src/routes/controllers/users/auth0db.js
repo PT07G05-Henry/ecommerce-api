@@ -20,6 +20,11 @@ const auth0db = async (req, res) => {
           profile_picture: JSON.parse(userDb.dataValues.profile_picture)
             .secure_url,
           birth_date: userDb.dataValues.birth_date,
+          direction: userDb.dataValues.direction,
+          street1: userDb.dataValues.street1,
+          street2: userDb.dataValues.street2,
+          city: userDb.dataValues.city,
+          postalCode: userDb.dataValues.postalCode,
         },
         roles: userDb.dataValues.rols.map((r) => r.type),
       });
