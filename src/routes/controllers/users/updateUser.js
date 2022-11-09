@@ -9,7 +9,17 @@ const getDetailUser = async (id) => {
 
 const updateUser = async (req, res) => {
   // actualizacion de datos de usuarios
-  const { id, first_name, last_name, birth_date } = req.body;
+  const {
+    id,
+    first_name,
+    last_name,
+    birth_date,
+    direction,
+    street1,
+    street2,
+    city,
+    postalCode,
+  } = req.body;
   try {
     let newProfile_picture = {};
     if (req.files?.profile_picture) {
@@ -17,8 +27,8 @@ const updateUser = async (req, res) => {
         req.files.profile_picture.tempFilePath
       );
       newProfile_picture = {
-        secure_url:cloudinaryImg.secure_url,
-        public_id: cloudinaryImg.public_id
+        secure_url: cloudinaryImg.secure_url,
+        public_id: cloudinaryImg.public_id,
       };
       await fse.unlink(req.files.profile_picture.tempFilePath);
     }
@@ -29,6 +39,11 @@ const updateUser = async (req, res) => {
         last_name,
         birth_date,
         profile_picture: newProfile_picture,
+        direction,
+        street1,
+        street2,
+        city,
+        postalCode,
       },
       {
         where: {
@@ -41,7 +56,8 @@ const updateUser = async (req, res) => {
     res.status(200);
     res.send({
       ...result.dataValues,
-      profile_picture: JSON.parse(result.dataValues.profile_picture).secure_url})
+      profile_picture: JSON.parse(result.dataValues.profile_picture).secure_url,
+    });
   } catch (err) {
     res.status(400);
     res.send(err.message);
