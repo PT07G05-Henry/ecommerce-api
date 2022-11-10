@@ -5,6 +5,7 @@ const htmlTesting = require("./templates/htmlTesting");
 const htmlNewUserEmail = require("./templates/newUserEmail");
 const htmlNewBuyCart = require("./templates/newBuyCart");
 const { Orders_products } = require("../../../db");
+const htmlOrderStatus = require("./templates/orderStatus")
 
 const sendEmail = async (req, res) => {
   const {
@@ -15,7 +16,9 @@ const sendEmail = async (req, res) => {
     products,
     directionAddress,
     totalPrice,
+    justSend,
     orderId,
+    orderStatus
   } = req.body; //type es para saber que type de correo enviar
 
   const produ = await Orders_products.findAll({ where: { orderId: orderId } });
@@ -36,6 +39,9 @@ const sendEmail = async (req, res) => {
     </body>
     </html>
     `;
+    if (type === "orderStatus") {
+      htmlEmail = htmlOrderStatus(orderId, orderStatus);
+    }
     if (type === "newUserEmail") {
       htmlEmail = htmlNewUserEmail(email, subject, message);
     }
@@ -73,6 +79,9 @@ const sendEmail = async (req, res) => {
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
         return res.status(404).send("Error sending Email");
+      }
+      if(justSend){
+        return res.status(200).send("Email Sended")
       }
       return res.redirect(req.query.responseMP);
     });
