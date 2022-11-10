@@ -66,6 +66,7 @@ const createOrder = async (req, res, next) => {
     };
 
     req.body.order = order;
+    req.body.orderStatus = order.dataValues.status;
     if (response.data.payment_type_id === "account_money")
       req.body.payment.type = "Mercado Pago";
     if (response.data.payment_type_id === "credit_card")
