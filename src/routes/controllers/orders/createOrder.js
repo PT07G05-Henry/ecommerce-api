@@ -6,9 +6,8 @@ const { ACCESS_TOKEN_TEST_MP } = process.env;
 const createOrder = async (req, res, next) => {
   //falta escribir acá
   try {
-    //console.log(ACCESS_TOKEN_TEST_MP);
     const { payment_id } = req.query;
-    //console.log(payment_id);
+
     const response = await axios.get(
       `https://api.mercadopago.com/v1/payments/${payment_id}`,
       {
@@ -17,7 +16,7 @@ const createOrder = async (req, res, next) => {
         },
       }
     );
-    //console.log(response.data.status);
+
     const products = response.data.additional_info.items;
     const total_price = Number(response.data.transaction_amount);
     const { sid } = response.data.metadata;
@@ -28,6 +27,8 @@ const createOrder = async (req, res, next) => {
     });
 
     // //create order
+    if (response.data.status === "in_process") response.data.status = "PENDING";
+
     const order = await Order.create({
       //LUEGO CAMBIAR PARA VERIFICAR EL STATUS DE MP
       status: response.data.status,
@@ -59,6 +60,23 @@ const createOrder = async (req, res, next) => {
       products: result.dataValues.products.map((p) => p.dataValues),
       orderId: order.dataValues.id
     };
+    req.body.payment = {
+      type: "",
+      status: "",
+    };
+
+    req.body.order = order;
+    if (response.data.payment_type_id === "account_money")
+      req.body.payment.type = "Mercado Pago";
+    if (response.data.payment_type_id === "credit_card")
+      req.body.payment.type = "Credit Card";
+    if (response.data.payment_type_id === "debit_card")
+      req.body.payment.type = "Debit";
+
+    if (response.data.status === "PENDING") req.body.payment.status = "Pending";
+    if (response.data.status === "approved")
+      req.body.payment.status = "Complete";
+    if (response.data.status === "rejected") req.body.payment.status = "Failed";
     req.body = { ...req.body, ...infoMail };
     next();
   } catch (e) {
