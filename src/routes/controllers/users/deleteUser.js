@@ -2,12 +2,13 @@ const { User } = require("../../../db");
 
 const deleteUser = async (req, res) => {
   // el usuario da de baja su cuenta
-  const { sid } = req.query;
+  const { id } = req.query;
   try {
-    const userDb = await User.findOne({ where: { sid } });
+    const userDb = await User.findOne({ where: { id } });
+    //console.log("userDb", userDb);
     await User.destroy({
       where: {
-        id: userDb.dataValues.id,
+        id: userDb.id,
       },
     });
     res.status(200);

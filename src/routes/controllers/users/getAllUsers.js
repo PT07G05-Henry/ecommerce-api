@@ -75,10 +75,9 @@ const getAllUsers = async (req, res) => {
         };
       }),
     };
-    console.log(obj.results);
     res.status(200).send(obj);
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     res.status(404).send(err.message);
   }
 };
