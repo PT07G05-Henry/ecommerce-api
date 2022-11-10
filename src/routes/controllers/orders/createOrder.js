@@ -57,6 +57,7 @@ const createOrder = async (req, res, next) => {
       email: `${result.user.dataValues.email}`,
       totalPrice: `${result.dataValues.total_price}`,
       products: result.dataValues.products.map((p) => p.dataValues),
+      orderId: order.dataValues.id
     };
     req.body = { ...req.body, ...infoMail };
     next();
