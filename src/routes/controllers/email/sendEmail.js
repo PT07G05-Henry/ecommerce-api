@@ -4,6 +4,7 @@ const nodemailer = require("nodemailer");
 const htmlTesting = require("./templates/htmlTesting");
 const htmlNewUserEmail = require("./templates/newUserEmail");
 const htmlNewBuyCart = require("./templates/newBuyCart");
+const { Orders_products } = require("../../../db");
 
 const sendEmail = async (req, res) => {
   const {
@@ -14,8 +15,11 @@ const sendEmail = async (req, res) => {
     products,
     directionAddress,
     totalPrice,
+    orderId,
   } = req.body; //type es para saber que type de correo enviar
 
+  const produ = await Orders_products.findAll({ where: { orderId: orderId } });
+  const myArray = produ?.map((p) => p.dataValues.product_quantity);
   if (!email || !subject || !message)
     return res.status(404).send("Data missing (Email, Subject Or Message)");
   nodemailer.createTestAccount((err, account) => {
@@ -41,7 +45,7 @@ const sendEmail = async (req, res) => {
           .send(404)
           .send("Data missing (products, directionAddress or totalPrice)");
       htmlEmail = htmlNewBuyCart(
-        email,
+        myArray,
         subject,
         message,
         products,
