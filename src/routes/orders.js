@@ -7,6 +7,7 @@ const { updateOrder } = require("./controllers/orders/updateOrder");
 const { getAllOrders } = require("./controllers/orders/getAllOrders");
 const { sendEmail } = require("./controllers/email/sendEmail");
 const { createPayment } = require("./controllers/payments/createPayment");
+const { createDelivery } = require("./controllers/deliveries/createDelivery");
 
 //Middlewares
 const { isAuthenticated } = require("./middlewares/auth");
@@ -35,7 +36,7 @@ router.post(
   createLinkMP
 );
 
-router.get("/mercadoResponse", createOrder, createPayment, sendEmail);
+router.get("/mercadoResponse", createOrder, createPayment, createDelivery, sendEmail);
 
 // For admin or user dashboard
 router.get("/", isAuthenticated, getOrders);
