@@ -1,4 +1,4 @@
-function orderStatus(id, status) {
+function orderStatus(id, status,statusDelivery) {
   return (`
   <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -226,7 +226,7 @@ function orderStatus(id, status) {
                             <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;font-family:'Cabin',sans-serif;" align="left">
 
                               <div style="line-height: 160%; text-align: center; word-wrap: break-word;">
-                                <p style="line-height: 160%; font-size: 14px;"><span style="font-size: 22px; line-height: 35.2px;">Order ${id}<br />Status ${status}</span></p>
+                                <p style="line-height: 160%; font-size: 14px;"><span style="font-size: 22px; line-height: 35.2px;">Order ${id}<br />Status ${status}<br/>Delivery Status: ${statusDelivery}</span></p>
                               </div>
 
                             </td>
