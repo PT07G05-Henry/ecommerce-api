@@ -17,7 +17,7 @@ const createOrder = async (req, res, next) => {
         },
       }
     );
-    //console.log(response.data.status);
+
     const products = response.data.additional_info.items;
     const total_price = Number(response.data.transaction_amount);
     const { sid } = response.data.metadata;
@@ -58,7 +58,25 @@ const createOrder = async (req, res, next) => {
       totalPrice: `${result.dataValues.total_price}`,
       products: result.dataValues.products.map((p) => p.dataValues),
     };
+    req.body.payment = {
+      type: "",
+      status: "",
+    };
+
+    req.body.order = order;
+    if (response.data.payment_type_id === "account_money")
+      req.body.payment.type = "Mercado Pago";
+    if (response.data.payment_type_id === "credit_card")
+      req.body.payment.type = "Credit Card";
+    if (response.data.payment_type_id === "debit_card")
+      req.body.payment.type = "Debit";
+
+    if (response.data.status === "pending") req.body.payment.status = "Pending";
+    if (response.data.status === "approved")
+      req.body.payment.status = "Complete";
+    if (response.data.status === "rejected") req.body.payment.status = "Failed";
     req.body = { ...req.body, ...infoMail };
+
     next();
   } catch (e) {
     console.log(e);
