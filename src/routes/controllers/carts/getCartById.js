@@ -7,15 +7,15 @@ const getCartId = async (userId) => {
 
 const getCartById = async (req, res) => {
   const userId = req.params.userId;
-  const products = req.body.products;
+  const products = req.body.products || [];
   try {
     let cart = await getCartId(userId);
     if (cart.length === 0) {
-      const newCart = await Cart.create({items:products});
-      return res.send(newCart).status(200);
+      const newCart = await Cart.create({ userId: userId, items: products });
+      console.log(newCart)
+      return res.send(...newCart).status(200);
     }
-
-    res.status(200).send(cart);
+    res.status(200).send(...cart);
   } catch (err) {
     res.status(500).send(err.message);
   }
