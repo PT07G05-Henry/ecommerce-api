@@ -1,4 +1,4 @@
-function newBuyCart(email, asunto, mensaje, products, deliveryAddress, totalPrice) {
+function newBuyCart(myArray, asunto, mensaje, products, deliveryAddress, totalPrice) {
   return `
   <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -230,14 +230,14 @@ function newBuyCart(email, asunto, mensaje, products, deliveryAddress, totalPric
                               
                                 ${
                                   products &&
-                                  products.map((p) => {
+                                  products.map((p,i) => {
                                     return `
                                         <div style="background-color:#8c7d3b; width:50%">
                                         <img align="center" border="0" src="${JSON.parse(p.images)[0].secure_url}" alt="${p.name}" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 290px;"
                                         width="290" />
                                         <p style="color:black; font-weight:800">Product Name: ${p.name}</p>
                                         <p style="color:black; font-weight:800">Unitary Price: ${p.price}</p>
-                                        <p style="color:black; font-weight:800">Total of Units: ${p.orders_products.dataValues.product_quantity}</p>
+                                        <p style="color:black; font-weight:800">Total of Units: ${myArray[i]}</p>
                                         <p style="color:black; font-weight:800">Total Price per Unit: ${Number(p.orders_products.dataValues.product_quantity) * Number(p.price)}</p>
                                         </div>
                                       `;
