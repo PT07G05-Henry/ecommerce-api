@@ -1,4 +1,4 @@
-function newBuyCart(myArray, asunto, mensaje, products, deliveryAddress, totalPrice) {
+function newBuyCart(myArray, orderStatus, mensaje, products, deliveryAddress, totalPrice) {
   return `
   <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -213,6 +213,7 @@ function newBuyCart(myArray, asunto, mensaje, products, deliveryAddress, totalPr
 
                               <div style="line-height: 140%; text-align: center; word-wrap: break-word;">
                                 <p style="font-size: 14px; line-height: 140%;"><strong>YOU MAKE A NEW PURCHASE</strong></p>
+                                <p style="font-size: 14px; line-height: 140%;"><strong>Order Status: ${orderStatus}</strong></p>
                                 <p style="font-size: 14px; line-height: 140%;"><strong>TOTAL PRICE: ${totalPrice}</strong></p>
                                 <p style="font-size: 14px; line-height: 140%;"><strong>${deliveryAddress}</strong></p>
                               </div>
@@ -238,7 +239,7 @@ function newBuyCart(myArray, asunto, mensaje, products, deliveryAddress, totalPr
                                         <p style="color:black; font-weight:800">Product Name: ${p.name}</p>
                                         <p style="color:black; font-weight:800">Unitary Price: ${p.price}</p>
                                         <p style="color:black; font-weight:800">Total of Units: ${myArray[i]}</p>
-                                        <p style="color:black; font-weight:800">Total Price per Unit: ${Number(p.orders_products.dataValues.product_quantity) * Number(p.price)}</p>
+                                        <p style="color:black; font-weight:800">Sub Total: ${(Number(myArray[i]) * Number(p.price)).toFixed(2)}</p>
                                         </div>
                                       `;
                                   })

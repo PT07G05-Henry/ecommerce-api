@@ -52,7 +52,7 @@ Order.belongsTo(User);
 Payment.hasOne(Order);
 Order.belongsTo(Payment);
 
-Delivery.hasMany(Order);
+Delivery.hasOne(Order);
 Order.belongsTo(Delivery);
 
 User.belongsToMany(Rol, {through: 'users_rols', timestamps: false});
