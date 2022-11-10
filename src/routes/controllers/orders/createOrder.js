@@ -6,9 +6,8 @@ const { ACCESS_TOKEN_TEST_MP } = process.env;
 const createOrder = async (req, res, next) => {
   //falta escribir acá
   try {
-    //console.log(ACCESS_TOKEN_TEST_MP);
     const { payment_id } = req.query;
-    //console.log(payment_id);
+
     const response = await axios.get(
       `https://api.mercadopago.com/v1/payments/${payment_id}`,
       {
@@ -28,6 +27,8 @@ const createOrder = async (req, res, next) => {
     });
 
     // //create order
+    if (response.data.status === "in_process") response.data.status = "PENDING";
+
     const order = await Order.create({
       //LUEGO CAMBIAR PARA VERIFICAR EL STATUS DE MP
       status: response.data.status,
@@ -71,12 +72,11 @@ const createOrder = async (req, res, next) => {
     if (response.data.payment_type_id === "debit_card")
       req.body.payment.type = "Debit";
 
-    if (response.data.status === "pending") req.body.payment.status = "Pending";
+    if (response.data.status === "PENDING") req.body.payment.status = "Pending";
     if (response.data.status === "approved")
       req.body.payment.status = "Complete";
     if (response.data.status === "rejected") req.body.payment.status = "Failed";
     req.body = { ...req.body, ...infoMail };
-
     next();
   } catch (e) {
     console.log(e);

@@ -5,12 +5,11 @@ const createPayment = async (req, res, next) => {
 
   if (!type || !status) {
     res.status(400);
-    return res.send(req.body);
+    return res.send("Missing type or status payment");
   }
   try {
     let newPayment = await Payment.create({ type, status });
     await newPayment.setOrder(req.body.order);
-
     next();
   } catch (err) {
     res.status(400);
