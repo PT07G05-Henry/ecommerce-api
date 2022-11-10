@@ -18,7 +18,8 @@ const sendEmail = async (req, res) => {
     totalPrice,
     justSend,
     orderId,
-    orderStatus
+    orderStatus,
+    statusDelivery,
   } = req.body; //type es para saber que type de correo enviar
 
   const produ = await Orders_products.findAll({ where: { orderId: orderId } });
@@ -40,7 +41,7 @@ const sendEmail = async (req, res) => {
     </html>
     `;
     if (type === "orderStatus") {
-      htmlEmail = htmlOrderStatus(orderId, orderStatus);
+      htmlEmail = htmlOrderStatus(orderId, orderStatus, statusDelivery);
     }
     if (type === "newUserEmail") {
       htmlEmail = htmlNewUserEmail(email, subject, message);
@@ -52,7 +53,7 @@ const sendEmail = async (req, res) => {
           .send("Data missing (products, directionAddress or totalPrice)");
       htmlEmail = htmlNewBuyCart(
         myArray,
-        subject,
+        orderStatus,
         message,
         products,
         directionAddress,
@@ -83,6 +84,7 @@ const sendEmail = async (req, res) => {
       if(justSend){
         return res.status(200).send("Email Sended")
       }
+      console.log(req.query.responseMP)
       return res.redirect(req.query.responseMP);
     });
   });
