@@ -50,7 +50,6 @@ const getOrdersDb = async function (userDb, status, order) {
 const getOrders = async (req, res) => {
   const { sid, status, order } = req.query;
   try {
-    console.log("get orders");
     const userDb = await User.findOne({ where: { sid } });
     const orders = await getOrdersDb(userDb, status, order);
     orders.length
