@@ -1,8 +1,8 @@
 const { Category } = require("../../../db");
 
 const createCategory = async (req, res) => {
-  const { name, image } = req.body;
-  if (!name || !image) {
+  const { name } = req.body;
+  if (!name) {
     res.status(400);
     return res.send("Missing to send mandatory data");
   }
