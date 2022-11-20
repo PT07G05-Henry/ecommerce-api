@@ -17,6 +17,7 @@ const { isAdmin } = require("./middlewares/admin");
 const dataMercado = require("./middlewares/dataMercado.js");
 const checkStock = require("./middlewares/checkStock.js");
 const { createLinkMP } = require("./middlewares/mercado.js");
+const {updateStock} = require("./middlewares/updateStock.js")
 
 const router = Router();
 
@@ -36,7 +37,7 @@ router.post(
   createLinkMP
 );
 
-router.get("/mercadoResponse", createOrder, createPayment, createDelivery, sendEmail);
+router.get("/mercadoResponse", createOrder, createPayment, createDelivery, updateStock, sendEmail);
 
 // For admin or user dashboard
 router.get("/", isAuthenticated, getOrders);
