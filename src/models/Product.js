@@ -78,6 +78,10 @@ module.exports = (sequelize) => {
         },
         defaultValue: 0,
       },
+      available: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
       // comments: {
       //   type: DataTypes.ARRAY(DataTypes.TEXT),
       // },

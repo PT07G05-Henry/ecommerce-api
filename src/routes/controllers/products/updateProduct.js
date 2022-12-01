@@ -1,10 +1,10 @@
-const { Product } = require("../../../db");
 const { getProduct } = require("./getProductDetail");
 const fse = require("fs-extra");
 const { uploadImage } = require("../../auxFunctions/cloudinary.js");
 
 const updateProduct = async (req, res) => {
-  const { id, name, price, description, stock, categories } = req.body;
+  const { id, name, price, description, stock, categories, available } =
+    req.body;
 
   try {
     const newImages = [];
@@ -35,12 +35,13 @@ const updateProduct = async (req, res) => {
       price: price && Number.parseFloat(price).toFixed(2), // convertir a float!!!
       description,
       stock: stock && Number.parseInt(stock),
+      available,
     });
 
-    if(categories && categories.length) {
-      const cat = categories.split(',').map((c) => Number.parseInt(c));
+    if (categories && categories.length) {
+      const cat = categories.split(",").map((c) => Number.parseInt(c));
       await productDb.setCategories(cat);
-      }
+    }
 
     if (req.files?.images) {
       await productDb.update({
